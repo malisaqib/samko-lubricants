@@ -1,136 +1,125 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
 import Link from "next/link";
+import Image from "next/image";
 import { 
   Droplets, 
-  Gauge, 
-  Cog, 
-  Factory, 
-  Truck, 
-  Ship,
-  Search,
+  Shield,
+  Zap,
   ArrowRight,
-  CheckCircle,
-  Beaker
+  Star,
+  Sparkles,
+  Award,
+  ThumbsUp
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-const categories = [
-  { id: "all", name: "All Products", icon: Beaker },
-  { id: "engine", name: "Engine Oils", icon: Gauge },
-  { id: "hydraulic", name: "Hydraulic Fluids", icon: Droplets },
-  { id: "gear", name: "Gear Oils", icon: Cog },
-  { id: "industrial", name: "Industrial Oils", icon: Factory },
-  { id: "transport", name: "Transport Fluids", icon: Truck },
-  { id: "marine", name: "Marine Lubricants", icon: Ship },
-];
 
 const products = [
   {
     id: 1,
-    category: "engine",
-    name: "SAMKO Turbo Diesel 15W-40",
-    description: "Premium heavy-duty diesel engine oil for commercial vehicles",
-    specifications: ["API CI-4/SL", "ACEA E7", "Meets OEM standards"],
-    featured: true,
+    name: "SAMKO Super Engine Oil 34",
+    description: "Premium heavy-duty diesel engine oil for commercial vehicles. Provides exceptional wear protection and engine cleanliness.",
+    image: "/34 super engine oil.jpeg",
+    badge: "Best Seller",
   },
   {
     id: 2,
-    category: "engine",
-    name: "SAMKO Synthetic 5W-30",
-    description: "Full synthetic engine oil for modern passenger vehicles",
-    specifications: ["API SN Plus", "ILSAC GF-6", "dexos1 Gen 2"],
-    featured: true,
+    name: "SAMKO Engine Oil 20W-50",
+    description: "High-performance multi-grade engine oil for modern passenger vehicles. Excellent thermal stability.",
+    image: "/engine-oil-20w50.jpeg",
+    badge: "Popular",
   },
   {
     id: 3,
-    category: "hydraulic",
-    name: "SAMKO Hydraulic AW 46",
-    description: "Anti-wear hydraulic oil for industrial systems",
-    specifications: ["ISO 46", "DIN 51524 Part 2", "Zinc-based AW"],
-    featured: false,
+    name: "SAMKO Hydraulic Fluid",
+    description: "Anti-wear hydraulic oil for industrial systems. Superior oxidation resistance and foam control.",
+    image: "/hydraulic-fluid.jpeg",
+    badge: "Industrial",
   },
   {
     id: 4,
-    category: "hydraulic",
-    name: "SAMKO Bio Hydraulic",
-    description: "Biodegradable hydraulic fluid for environmentally sensitive areas",
-    specifications: ["HEES Type", "Biodegradable", "Low toxicity"],
-    featured: false,
+    name: "SAMKO Pioneer Engine Oil",
+    description: "Premium engine oil engineered for superior performance. Extended drain intervals and low volatility.",
+    image: "/pioneer engine oil.jpeg",
+    badge: "Premium",
   },
   {
     id: 5,
-    category: "gear",
-    name: "SAMKO Gear EP 80W-90",
-    description: "Extreme pressure gear oil for heavy-duty transmissions",
-    specifications: ["API GL-5", "MT-1", "MIL-PRF-2105E"],
-    featured: true,
+    name: "SAMKO Gear Lube",
+    description: "Extreme pressure gear oil for heavy-duty transmissions. Maximum protection under high loads.",
+    image: "/gear-lube.jpeg",
+    badge: "Heavy Duty",
   },
   {
     id: 6,
-    category: "gear",
-    name: "SAMKO Synthetic Gear 75W-90",
-    description: "Full synthetic gear oil for extended drain intervals",
-    specifications: ["API GL-5", "Synthetic base", "Low temperature fluidity"],
-    featured: false,
+    name: "SAMKO Lubricating Oil",
+    description: "Multi-purpose lubricating oil for industrial applications. Versatile and cost-effective solution.",
+    image: "/lubricating oil.jpeg",
+    badge: "Versatile",
   },
   {
     id: 7,
-    category: "industrial",
-    name: "SAMKO Compressor Oil",
-    description: "High-performance oil for rotary and reciprocating compressors",
-    specifications: ["ISO VG 46/68", "Oxidation resistant", "Anti-foam"],
-    featured: false,
+    name: "SAMKO Power Oil",
+    description: "High-performance oil for power transmission systems. Ensures smooth operation and long service life.",
+    image: "/power-oil.jpeg",
+    badge: "Performance",
   },
   {
     id: 8,
-    category: "industrial",
-    name: "SAMKO Turbine Oil",
-    description: "Premium turbine oil for steam and gas turbines",
-    specifications: ["ISO VG 32/46", "DIN 51515", "Extended life"],
-    featured: true,
-  },
-  {
-    id: 9,
-    category: "transport",
-    name: "SAMKO Fleet HD 15W-40",
-    description: "Heavy-duty fleet oil for maximum protection",
-    specifications: ["API CK-4", "ACEA E9", "Volvo VDS-4.5"],
-    featured: false,
-  },
-  {
-    id: 10,
-    category: "transport",
-    name: "SAMKO ATF Dexron VI",
-    description: "Automatic transmission fluid for modern vehicles",
-    specifications: ["Dexron VI", "Mercon LV", "Multi-vehicle"],
-    featured: false,
-  },
-  {
-    id: 11,
-    category: "marine",
-    name: "SAMKO Marine Diesel",
-    description: "Marine engine oil for commercial and recreational vessels",
-    specifications: ["API CF", "NMMA FC-W", "Salt water resistant"],
-    featured: true,
-  },
-  {
-    id: 12,
-    category: "marine",
-    name: "SAMKO Outboard 2T",
-    description: "Two-stroke oil for outboard engines",
-    specifications: ["NMMA TC-W3", "Low smoke", "Biodegradable option"],
-    featured: false,
+    name: "SAMKO Coolant",
+    description: "Premium coolant for optimal engine temperature management. Long-life formula with corrosion protection.",
+    image: "/coolant.jpeg",
+    badge: "Essential",
   },
 ];
 
+const features = [
+  {
+    icon: Shield,
+    title: "Maximum Protection",
+    description: "Advanced formulations that protect against wear, corrosion, and deposits",
+  },
+  {
+    icon: Zap,
+    title: "Peak Performance",
+    description: "Engineered to deliver optimal performance in extreme conditions",
+  },
+  {
+    icon: Droplets,
+    title: "Superior Quality",
+    description: "Premium base oils and additives for exceptional lubrication",
+  },
+  {
+    icon: Award,
+    title: "Trusted Brand",
+    description: "Decades of experience serving Pakistan's industrial needs",
+  },
+];
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" },
+  },
+};
+
 export default function ProductsPage() {
   const [mounted, setMounted] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [searchQuery, setSearchQuery] = useState("");
   const { resolvedTheme } = useTheme();
   
   useEffect(() => {
@@ -139,26 +128,44 @@ export default function ProductsPage() {
 
   const isDark = mounted ? resolvedTheme === "dark" : true;
 
-  const filteredProducts = products.filter((product) => {
-    const matchesCategory = selectedCategory === "all" || product.category === selectedCategory;
-    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         product.description.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
-
   return (
     <div className={cn(
       "min-h-screen transition-colors duration-300",
-      isDark ? "bg-industrial-darker" : "bg-white"
+      isDark ? "bg-industrial-darker" : "bg-gray-50"
     )}>
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
+      {/* Hero Section with Floating Elements */}
+      <section className="relative pt-32 pb-24 overflow-hidden">
+        {/* Animated Background */}
         <div className={cn(
           "absolute inset-0",
           isDark 
-            ? "bg-gradient-to-b from-industrial-dark to-industrial-darker" 
-            : "bg-gradient-to-b from-gray-100 to-white"
+            ? "bg-gradient-to-br from-industrial-dark via-industrial-darker to-industrial-dark" 
+            : "bg-gradient-to-br from-gray-100 via-white to-gray-100"
         )} />
+        
+        {/* Floating Decorative Elements */}
+        <motion.div 
+          className={cn(
+            "absolute top-20 right-10 w-72 h-72 rounded-full blur-3xl",
+            isDark ? "bg-samko-yellow/10" : "bg-samko-yellow/20"
+          )}
+          animate={{ 
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3],
+          }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div 
+          className={cn(
+            "absolute bottom-10 left-10 w-96 h-96 rounded-full blur-3xl",
+            isDark ? "bg-samko-gold/5" : "bg-samko-gold/10"
+          )}
+          animate={{ 
+            scale: [1.2, 1, 1.2],
+            opacity: [0.2, 0.4, 0.2],
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        />
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -167,225 +174,442 @@ export default function ProductsPage() {
             transition={{ duration: 0.6 }}
             className="text-center"
           >
-            <span className={cn(
-              "inline-block px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] mb-6",
-              isDark 
-                ? "text-samko-yellow border-l-2 border-samko-yellow bg-samko-yellow/10" 
-                : "text-samko-dark-red border-l-2 border-samko-dark-red bg-samko-red/5"
-            )}>
-              Product Catalog
-            </span>
-            <h1 className={cn(
-              "font-heading text-4xl md:text-6xl font-semibold mb-6",
-              isDark ? "text-white" : "text-gray-900"
-            )}>
-              Our <span className={isDark ? "text-samko-yellow" : "text-samko-dark-red"}>Product Range</span>
-            </h1>
-            <p className={cn(
-              "text-xl max-w-2xl mx-auto",
-              isDark ? "text-gray-400" : "text-gray-600"
-            )}>
-              Comprehensive lubrication solutions engineered for every industrial application
-            </p>
+            <motion.span 
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className={cn(
+                "inline-flex items-center gap-2 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] mb-6 rounded-full",
+                isDark 
+                  ? "text-samko-yellow bg-samko-yellow/10 border border-samko-yellow/20" 
+                  : "text-samko-dark-red bg-samko-red/5 border border-samko-dark-red/20"
+              )}
+            >
+              <Sparkles className="w-4 h-4" />
+              Premium Quality
+            </motion.span>
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+              className={cn(
+                "font-heading text-4xl md:text-6xl lg:text-7xl font-semibold mb-6",
+                isDark ? "text-white" : "text-gray-900"
+              )}
+            >
+              Our <span className={cn(
+                "relative inline-block",
+                isDark ? "text-samko-yellow" : "text-samko-dark-red"
+              )}>
+                Products
+                <motion.span 
+                  className={cn(
+                    "absolute -bottom-2 left-0 h-1 rounded-full",
+                    isDark ? "bg-samko-yellow" : "bg-samko-dark-red"
+                  )}
+                  initial={{ width: 0 }}
+                  animate={{ width: "100%" }}
+                  transition={{ delay: 0.8, duration: 0.6 }}
+                />
+              </span>
+            </motion.h1>
+            <motion.p 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+              className={cn(
+                "text-lg md:text-xl max-w-2xl mx-auto",
+                isDark ? "text-gray-400" : "text-gray-600"
+              )}
+            >
+              Comprehensive lubrication solutions engineered for every industrial application across Pakistan
+            </motion.p>
           </motion.div>
         </div>
       </section>
 
-      {/* Filters Section */}
+      {/* Features Bar */}
       <section className={cn(
-        "relative py-6 border-y sticky top-20 z-30",
+        "relative py-8 border-y",
         isDark 
-          ? "bg-industrial-dark/95 backdrop-blur-lg border-white/10" 
-          : "bg-white/95 backdrop-blur-lg border-gray-200"
+          ? "bg-industrial-dark/50 border-white/5" 
+          : "bg-white border-gray-200"
       )}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
-            {/* Search */}
-            <div className="relative w-full lg:w-80">
-              <Search className={cn(
-                "absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5",
-                isDark ? "text-gray-500" : "text-gray-400"
-              )} />
-              <input
-                type="text"
-                placeholder="Search products..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+          <motion.div 
+            className="grid grid-cols-2 md:grid-cols-4 gap-6"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            {features.map((feature, index) => (
+              <motion.div
+                key={index}
+                variants={itemVariants}
+                whileHover={{ scale: 1.05, y: -5 }}
                 className={cn(
-                  "w-full pl-12 pr-4 py-3 rounded-sm text-sm focus:outline-none focus:ring-2 transition-all",
+                  "flex items-center gap-4 p-4 rounded-lg cursor-default transition-all duration-300",
                   isDark 
-                    ? "bg-white/5 border border-white/10 text-white placeholder:text-gray-500 focus:ring-samko-yellow/50" 
-                    : "bg-gray-50 border border-gray-200 text-gray-900 placeholder:text-gray-400 focus:ring-samko-dark-red/50"
+                    ? "hover:bg-white/5" 
+                    : "hover:bg-gray-50 hover:shadow-lg"
                 )}
-              />
-            </div>
-
-            {/* Category Filters */}
-            <div className="flex flex-wrap items-center justify-center gap-2">
-              {categories.map((category) => (
-                <button
-                  key={category.id}
-                  onClick={() => setSelectedCategory(category.id)}
+              >
+                <motion.div 
                   className={cn(
-                    "flex items-center gap-2 px-4 py-2 rounded-sm text-sm font-medium transition-all duration-200",
-                    selectedCategory === category.id
-                      ? "bg-samko-yellow text-industrial-dark"
-                      : isDark
-                        ? "bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white"
-                        : "bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-900"
+                    "flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center",
+                    isDark 
+                      ? "bg-samko-yellow/10 text-samko-yellow" 
+                      : "bg-samko-red/10 text-samko-dark-red"
                   )}
+                  whileHover={{ rotate: [0, -10, 10, 0] }}
+                  transition={{ duration: 0.5 }}
                 >
-                  <category.icon className="w-4 h-4" />
-                  <span className="hidden sm:inline">{category.name}</span>
-                </button>
-              ))}
-            </div>
-          </div>
+                  <feature.icon className="w-6 h-6" />
+                </motion.div>
+                <div>
+                  <h3 className={cn(
+                    "font-semibold text-sm",
+                    isDark ? "text-white" : "text-gray-900"
+                  )}>
+                    {feature.title}
+                  </h3>
+                  <p className={cn(
+                    "text-xs",
+                    isDark ? "text-gray-500" : "text-gray-500"
+                  )}>
+                    {feature.description}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </section>
 
       {/* Products Grid */}
-      <section className="py-16">
+      <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Results Count */}
-          <div className="flex items-center justify-between mb-8">
-            <p className={isDark ? "text-gray-400" : "text-gray-600"}>
-              Showing <span className={cn("font-semibold", isDark ? "text-white" : "text-gray-900")}>{filteredProducts.length}</span> products
+          {/* Section Header */}
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className={cn(
+              "font-heading text-3xl md:text-4xl font-semibold mb-4",
+              isDark ? "text-white" : "text-gray-900"
+            )}>
+              Explore Our Range
+            </h2>
+            <p className={cn(
+              "text-lg max-w-xl mx-auto",
+              isDark ? "text-gray-400" : "text-gray-600"
+            )}>
+              Quality lubricants for every engine and machine
             </p>
-          </div>
-
-          {/* Grid */}
-          <motion.div layout className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <AnimatePresence mode="popLayout">
-              {filteredProducts.map((product, index) => (
-                <motion.div
-                  key={product.id}
-                  layout
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3, delay: index * 0.05 }}
-                  className="group"
-                >
-                  <div className={cn(
-                    "relative h-full rounded-sm overflow-hidden transition-all duration-300",
-                    isDark 
-                      ? "bg-white/5 border border-white/5 hover:border-samko-yellow/30" 
-                      : "bg-white border border-gray-100 hover:shadow-lg"
-                  )}>
-                    {/* Featured Badge */}
-                    {product.featured && (
-                      <div className="absolute top-4 left-4 z-10 px-3 py-1 bg-samko-yellow text-industrial-dark text-xs font-semibold">
-                        Featured
-                      </div>
-                    )}
-
-                    {/* Content */}
-                    <div className="p-6">
-                      <div className="flex items-center gap-2 mb-4">
-                        <span className={cn(
-                          "px-2 py-1 text-xs font-medium rounded-sm",
-                          isDark 
-                            ? "bg-samko-yellow/10 text-samko-yellow" 
-                            : "bg-samko-red/5 text-samko-dark-red"
-                        )}>
-                          {categories.find(c => c.id === product.category)?.name}
-                        </span>
-                      </div>
-                      <h3 className={cn(
-                        "text-xl font-semibold mb-2 transition-colors",
-                        isDark 
-                          ? "text-white group-hover:text-samko-yellow" 
-                          : "text-gray-900 group-hover:text-samko-dark-red"
-                      )}>
-                        {product.name}
-                      </h3>
-                      <p className={cn(
-                        "text-sm mb-4",
-                        isDark ? "text-gray-400" : "text-gray-600"
-                      )}>
-                        {product.description}
-                      </p>
-
-                      {/* Specifications */}
-                      <div className="space-y-2 mb-6">
-                        {product.specifications.slice(0, 2).map((spec, i) => (
-                          <div key={i} className={cn(
-                            "flex items-center gap-2 text-sm",
-                            isDark ? "text-gray-500" : "text-gray-500"
-                          )}>
-                            <CheckCircle className={cn(
-                              "w-3 h-3",
-                              isDark ? "text-samko-yellow" : "text-samko-dark-red"
-                            )} />
-                            {spec}
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* Action */}
-                      <button className={cn(
-                        "flex items-center gap-2 text-sm font-semibold transition-all group-hover:gap-3",
-                        isDark 
-                          ? "text-samko-yellow" 
-                          : "text-samko-dark-red"
-                      )}>
-                        View Details
-                        <ArrowRight className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
           </motion.div>
 
-          {/* No Results */}
-          {filteredProducts.length === 0 && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-center py-20"
-            >
-              <Beaker className={cn(
-                "w-16 h-16 mx-auto mb-4",
-                isDark ? "text-gray-700" : "text-gray-300"
-              )} />
-              <h3 className={cn(
-                "text-xl font-semibold mb-2",
-                isDark ? "text-white" : "text-gray-900"
-              )}>
-                No products found
-              </h3>
-              <p className={isDark ? "text-gray-400" : "text-gray-600"}>
-                Try adjusting your search or filter criteria
-              </p>
-            </motion.div>
-          )}
+          {/* Grid */}
+          <motion.div 
+            className="grid md:grid-cols-2 lg:grid-cols-4 gap-8"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            {products.map((product, index) => (
+              <motion.div
+                key={product.id}
+                variants={itemVariants}
+                whileHover={{ y: -10 }}
+                className="group relative"
+              >
+                <div className={cn(
+                  "relative h-full rounded-xl overflow-hidden transition-all duration-500",
+                  isDark 
+                    ? "bg-gradient-to-br from-white/10 to-white/5 border border-white/10 hover:border-samko-yellow/50 hover:shadow-2xl hover:shadow-samko-yellow/10" 
+                    : "bg-white border border-gray-200 hover:border-samko-dark-red/30 hover:shadow-2xl hover:shadow-gray-300/50"
+                )}>
+                  {/* Badge */}
+                  <motion.div 
+                    className="absolute top-4 right-4 z-10"
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 + 0.3 }}
+                  >
+                    <span className={cn(
+                      "inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full",
+                      isDark 
+                        ? "bg-samko-yellow text-industrial-dark" 
+                        : "bg-samko-dark-red text-white"
+                    )}>
+                      <Star className="w-3 h-3" />
+                      {product.badge}
+                    </span>
+                  </motion.div>
+
+                  {/* Product Image */}
+                  <div className={cn(
+                    "relative h-52 overflow-hidden",
+                    isDark 
+                      ? "bg-gradient-to-br from-industrial-dark to-industrial-darker" 
+                      : "bg-gradient-to-br from-gray-100 to-white"
+                  )}>
+                    {/* Glow Effect on Hover */}
+                    <div className={cn(
+                      "absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500",
+                      isDark 
+                        ? "bg-gradient-to-t from-samko-yellow/20 via-transparent to-transparent" 
+                        : "bg-gradient-to-t from-samko-dark-red/10 via-transparent to-transparent"
+                    )} />
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      fill
+                      className="object-contain p-6 transition-all duration-700 group-hover:scale-110 group-hover:rotate-3"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                    />
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-6">
+                    <h3 className={cn(
+                      "text-lg font-bold mb-3 transition-colors duration-300 leading-tight",
+                      isDark 
+                        ? "text-white group-hover:text-samko-yellow" 
+                        : "text-gray-900 group-hover:text-samko-dark-red"
+                    )}>
+                      {product.name}
+                    </h3>
+                    <p className={cn(
+                      "text-sm leading-relaxed",
+                      isDark ? "text-gray-400" : "text-gray-600"
+                    )}>
+                      {product.description}
+                    </p>
+                    
+                    {/* Animated Line on Hover */}
+                    <motion.div 
+                      className={cn(
+                        "mt-4 h-0.5 rounded-full",
+                        isDark ? "bg-samko-yellow" : "bg-samko-dark-red"
+                      )}
+                      initial={{ scaleX: 0 }}
+                      whileHover={{ scaleX: 1 }}
+                      style={{ transformOrigin: "left", scaleX: 0 }}
+                    />
+                  </div>
+
+                  {/* Hover Border Glow */}
+                  <div className={cn(
+                    "absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none",
+                    isDark 
+                      ? "shadow-[inset_0_0_30px_rgba(255,193,7,0.1)]" 
+                      : "shadow-[inset_0_0_30px_rgba(178,34,34,0.05)]"
+                  )} />
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className={cn(
+        "py-20",
+        isDark ? "bg-industrial-dark" : "bg-white"
+      )}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            className="grid grid-cols-2 md:grid-cols-4 gap-8"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            {[
+              { value: "25+", label: "Years Experience" },
+              { value: "1000+", label: "Happy Customers" },
+              { value: "50+", label: "Product Varieties" },
+              { value: "100%", label: "Quality Assured" },
+            ].map((stat, index) => (
+              <motion.div
+                key={index}
+                variants={itemVariants}
+                whileHover={{ scale: 1.05 }}
+                className="text-center"
+              >
+                <motion.div 
+                  className={cn(
+                    "text-4xl md:text-5xl font-bold mb-2",
+                    isDark ? "text-samko-yellow" : "text-samko-dark-red"
+                  )}
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1, type: "spring" }}
+                >
+                  {stat.value}
+                </motion.div>
+                <p className={cn(
+                  "text-sm font-medium",
+                  isDark ? "text-gray-400" : "text-gray-600"
+                )}>
+                  {stat.label}
+                </p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Why Choose Us Section */}
+      <section className={cn(
+        "py-20",
+        isDark ? "bg-industrial-darker" : "bg-gray-50"
+      )}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className={cn(
+              "font-heading text-3xl md:text-4xl font-semibold mb-4",
+              isDark ? "text-white" : "text-gray-900"
+            )}>
+              Why Choose SAMKO?
+            </h2>
+          </motion.div>
+          
+          <motion.div 
+            className="grid md:grid-cols-3 gap-8"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            {[
+              {
+                icon: Shield,
+                title: "Quality Guaranteed",
+                description: "Every product meets strict quality standards for optimal engine protection and performance.",
+              },
+              {
+                icon: ThumbsUp,
+                title: "Customer Satisfaction",
+                description: "Trusted by thousands of customers across Pakistan for reliable lubrication solutions.",
+              },
+              {
+                icon: Zap,
+                title: "Maximum Efficiency",
+                description: "Our oils reduce friction, minimize wear, and maximize your machinery's lifespan.",
+              },
+            ].map((item, index) => (
+              <motion.div
+                key={index}
+                variants={itemVariants}
+                whileHover={{ y: -10, scale: 1.02 }}
+                className={cn(
+                  "relative p-8 rounded-xl text-center transition-all duration-300 cursor-default overflow-hidden",
+                  isDark 
+                    ? "bg-white/5 border border-white/10 hover:border-samko-yellow/30" 
+                    : "bg-white border border-gray-200 hover:shadow-xl"
+                )}
+              >
+                {/* Background Glow */}
+                <div className={cn(
+                  "absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500",
+                  isDark 
+                    ? "bg-gradient-to-br from-samko-yellow/10 to-transparent" 
+                    : "bg-gradient-to-br from-samko-red/5 to-transparent"
+                )} />
+                
+                <motion.div 
+                  className={cn(
+                    "relative w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center",
+                    isDark 
+                      ? "bg-samko-yellow/10 text-samko-yellow" 
+                      : "bg-samko-red/10 text-samko-dark-red"
+                  )}
+                  whileHover={{ rotate: 360, scale: 1.1 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <item.icon className="w-8 h-8" />
+                </motion.div>
+                <h3 className={cn(
+                  "relative text-xl font-bold mb-3",
+                  isDark ? "text-white" : "text-gray-900"
+                )}>
+                  {item.title}
+                </h3>
+                <p className={cn(
+                  "relative text-sm",
+                  isDark ? "text-gray-400" : "text-gray-600"
+                )}>
+                  {item.description}
+                </p>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-samko-yellow via-samko-gold to-samko-yellow">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="relative py-24 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-samko-yellow via-samko-gold to-samko-yellow" />
+        <div 
+          className="absolute inset-0 opacity-20"
+          style={{
+            backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")"
+          }}
+        />
+        
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="font-heading text-3xl md:text-4xl font-semibold text-industrial-dark mb-4">
-              Need a Custom Solution?
-            </h2>
-            <p className="text-lg text-industrial-dark/70 mb-8">
-              Our technical team can help you find the perfect lubricant for your specific application
-            </p>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 px-6 py-3.5 bg-industrial-dark text-white font-semibold text-sm hover:bg-industrial-darker transition-colors"
+            <motion.h2 
+              className="font-heading text-3xl md:text-5xl font-semibold text-industrial-dark mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
             >
-              Contact Our Experts
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+              Ready to Power Your Machines?
+            </motion.h2>
+            <motion.p 
+              className="text-lg md:text-xl text-industrial-dark/70 mb-10 max-w-2xl mx-auto"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
+              Get in touch with our experts to find the perfect lubricant for your specific needs
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+            >
+              <Link
+                href="/contact"
+                className="group inline-flex items-center gap-3 px-8 py-4 bg-industrial-dark text-white font-semibold text-base rounded-lg hover:bg-industrial-darker transition-all duration-300 hover:shadow-2xl hover:shadow-industrial-dark/30"
+              >
+                Contact Our Experts
+                <motion.span
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  <ArrowRight className="w-5 h-5" />
+                </motion.span>
+              </Link>
+            </motion.div>
           </motion.div>
         </div>
       </section>

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
-import { Quote } from "lucide-react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 const testimonials = [
@@ -12,18 +12,21 @@ const testimonials = [
     author: "Ahmed Al-Rashid",
     role: "Operations Director",
     company: "Gulf Manufacturing Co.",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&h=200&fit=crop",
   },
   {
     quote: "We've been using SAMKO products for over 15 years. Their technical support and product quality are unmatched.",
     author: "Michael Chen",
     role: "Plant Manager",
     company: "Pacific Industries Ltd.",
+    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200&h=200&fit=crop",
   },
   {
     quote: "The transition to SAMKO lubricants reduced our maintenance costs by 30%. Highly recommended for any industrial operation.",
     author: "Sarah Johnson",
     role: "Chief Engineer",
     company: "Atlantic Heavy Industries",
+    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=200&h=200&fit=crop",
   },
 ];
 
@@ -85,17 +88,14 @@ export default function Testimonials() {
                   : "bg-white border border-gray-100 shadow-sm"
               )}
             >
-              {/* Quote Icon */}
-              <div className={cn(
-                "inline-flex items-center justify-center w-10 h-10 rounded-sm mb-6",
-                isDark 
-                  ? "bg-samko-yellow/10" 
-                  : "bg-samko-red/5"
-              )}>
-                <Quote className={cn(
-                  "w-5 h-5",
-                  isDark ? "text-samko-yellow" : "text-samko-dark-red"
-                )} />
+              {/* Customer Image */}
+              <div className="relative w-16 h-16 rounded-full overflow-hidden mb-6 ring-2 ring-samko-yellow/30">
+                <Image
+                  src={testimonial.image}
+                  alt={testimonial.author}
+                  fill
+                  className="object-cover"
+                />
               </div>
 
               {/* Quote */}

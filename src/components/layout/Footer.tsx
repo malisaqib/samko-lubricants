@@ -73,8 +73,12 @@ export default function Footer() {
           {/* Company Info */}
           <div className="lg:col-span-2">
             <Link href="/" className="inline-flex items-center space-x-3 mb-6">
-              <div className="w-12 h-12 rounded-full bg-samko-yellow flex items-center justify-center shadow-md">
-                <span className="text-xl font-bold text-industrial-dark">S</span>
+              <div className="w-14 h-14 rounded-full overflow-hidden shadow-lg">
+                <img
+                  src="/logo.jpeg"
+                  alt="SAMKO Lubricants"
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div>
                 <h3 className={cn(

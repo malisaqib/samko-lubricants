@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-  <circle cx="100" cy="100" r="95" fill="#FFD700"/>
-  <path d="M140 120c-5 15-20 35-40 35s-35-20-40-35c-8-25 5-50 40-60 35 10 48 35 40 60z" fill="#DC2626"/>
-  <text x="100" y="50" text-anchor="middle" font-family="Arial Black" font-size="20" fill="#DC2626" font-weight="bold">SAMKO</text>
-  <text x="100" y="180" text-anchor="middle" font-family="Arial" font-size="12" fill="#DC2626">LUBRICANTS</text>
-</svg>

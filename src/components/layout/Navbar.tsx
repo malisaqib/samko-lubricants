@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -19,17 +19,41 @@ const navLinks = [
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const { setTheme, resolvedTheme } = useTheme();
   const pathname = usePathname();
+  const lastScrollY = useRef(0);
+  
+  // Check if we're on the home page (which has a hero with dark background)
+  const isHomePage = pathname === "/";
 
   useEffect(() => {
     setMounted(true);
+    
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      const currentScrollY = window.scrollY;
+      
+      // Update scrolled state
+      setIsScrolled(currentScrollY > 20);
+      
+      // Hide on scroll down, show on scroll up (Aramco style)
+      if (currentScrollY < 100) {
+        // Always show navbar at the top of the page
+        setIsVisible(true);
+      } else if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+        // Scrolling down & past threshold - hide navbar
+        setIsVisible(false);
+      } else if (currentScrollY < lastScrollY.current) {
+        // Scrolling up - show navbar
+        setIsVisible(true);
+      }
+      
+      lastScrollY.current = currentScrollY;
     };
-    window.addEventListener("scroll", handleScroll);
+    
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -43,11 +67,11 @@ export default function Navbar() {
     <>
       <motion.nav
         initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
+        animate={{ y: isVisible ? 0 : -100 }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-          isScrolled
+          isScrolled || !isHomePage
             ? isDark
               ? "bg-industrial-dark/95 backdrop-blur-lg shadow-xl border-b border-white/5"
               : "bg-white/95 backdrop-blur-lg shadow-lg border-b border-gray-200/50"
@@ -63,13 +87,13 @@ export default function Navbar() {
                 whileTap={{ scale: 0.98 }}
                 className="relative"
               >
-                <div className="w-12 h-12 rounded-full bg-samko-yellow flex items-center justify-center overflow-hidden shadow-md">
+                <div className="w-14 h-14 rounded-full overflow-hidden shadow-lg">
                   <Image
-                    src="/logo.svg"
+                    src="/logo.jpeg"
                     alt="SAMKO Lubricants"
-                    width={48}
-                    height={48}
-                    className="object-cover"
+                    width={56}
+                    height={56}
+                    className="object-cover w-full h-full"
                     priority
                   />
                 </div>
@@ -77,13 +101,13 @@ export default function Navbar() {
               <div className="flex flex-col">
                 <span className={cn(
                   "text-xl font-bold tracking-tight transition-colors duration-300",
-                  isDark ? "text-white group-hover:text-samko-yellow" : "text-gray-900 group-hover:text-samko-dark-red"
+                  (isScrolled || !isHomePage) && !isDark ? "text-samko-dark-red group-hover:text-samko-red" : "text-white group-hover:text-samko-yellow"
                 )}>
                   SAMKO
                 </span>
                 <span className={cn(
                   "text-[10px] uppercase tracking-[0.2em] font-medium",
-                  isDark ? "text-samko-yellow/80" : "text-samko-dark-red"
+                  (isScrolled || !isHomePage) && !isDark ? "text-samko-dark-red" : isDark ? "text-samko-yellow/80" : "text-samko-yellow"
                 )}>
                   Lubricants
                 </span>
@@ -97,27 +121,25 @@ export default function Navbar() {
                   key={link.name}
                   href={link.href}
                   className={cn(
-                    "relative px-4 py-2 text-sm font-medium tracking-wide transition-colors duration-200",
+                    "group relative px-4 py-2 text-sm font-medium tracking-wide transition-all duration-250 ease-out",
                     pathname === link.href
-                      ? isDark
-                        ? "text-samko-yellow"
-                        : "text-samko-dark-red"
-                      : isDark
-                        ? "text-white/70 hover:text-white"
-                        : "text-gray-600 hover:text-gray-900"
+                      ? (isScrolled || !isHomePage) && !isDark ? "text-samko-dark-red" : "text-samko-yellow"
+                      : (isScrolled || !isHomePage) && !isDark 
+                        ? "text-gray-700 hover:text-samko-dark-red" 
+                        : "text-white/90 hover:text-samko-yellow"
                   )}
                 >
                   {link.name}
-                  {pathname === link.href && (
-                    <motion.div
-                      layoutId="activeNav"
-                      className={cn(
-                        "absolute bottom-0 left-0 right-0 h-0.5",
-                        isDark ? "bg-samko-yellow" : "bg-samko-dark-red"
-                      )}
-                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                    />
-                  )}
+                  {/* Hover underline animation - slides from left to right */}
+                  <span
+                    className={cn(
+                      "absolute bottom-0 left-0 h-0.5 transition-all duration-300 ease-out origin-left",
+                      (isScrolled || !isHomePage) && !isDark ? "bg-samko-dark-red" : "bg-samko-yellow",
+                      pathname === link.href
+                        ? "w-full"
+                        : "w-0 group-hover:w-full"
+                    )}
+                  />
                 </Link>
               ))}
             </div>
@@ -131,10 +153,10 @@ export default function Navbar() {
                   whileTap={{ scale: 0.95 }}
                   onClick={toggleTheme}
                   className={cn(
-                    "p-2.5 rounded-full transition-all duration-200",
-                    isDark
-                      ? "bg-white/10 hover:bg-white/20 text-white"
-                      : "bg-gray-100 hover:bg-gray-200 text-gray-700"
+                    "p-2.5 rounded-full transition-all duration-200 [&_svg]:stroke-current [&_svg]:stroke-2 [&_svg]:fill-none",
+                    (isScrolled || !isHomePage) && !isDark 
+                      ? "text-gray-600 hover:text-samko-dark-red" 
+                      : "text-white/80 hover:text-samko-yellow"
                   )}
                   aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
                 >
@@ -185,7 +207,7 @@ export default function Navbar() {
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className={cn(
                   "lg:hidden p-2 transition-colors",
-                  isDark ? "text-white" : "text-gray-700"
+                  (isScrolled || !isHomePage) && !isDark ? "text-gray-700" : "text-white"
                 )}
               >
                 <AnimatePresence mode="wait">

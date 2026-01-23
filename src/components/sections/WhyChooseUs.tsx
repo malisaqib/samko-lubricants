@@ -30,7 +30,7 @@ const features = [
   },
 ];
 
-const certifications = ["ISO 9001:2015", "API Certified", "ACEA Standards", "OEM Approved"];
+
 
 export default function WhyChooseUs() {
   const [mounted, setMounted] = useState(false);
@@ -163,41 +163,7 @@ export default function WhyChooseUs() {
               </div>
             </div>
 
-            {/* Certifications */}
-            <h3 className={cn(
-              "text-sm font-semibold uppercase tracking-wider mb-4",
-              isDark ? "text-white" : "text-gray-900"
-            )}>
-              Certifications & Standards
-            </h3>
-            <div className="grid grid-cols-2 gap-3">
-              {certifications.map((cert, index) => (
-                <motion.div
-                  key={cert}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.3, delay: index * 0.1 }}
-                  className={cn(
-                    "flex items-center gap-2 px-4 py-3 rounded-sm",
-                    isDark 
-                      ? "bg-white/5" 
-                      : "bg-white border border-gray-200"
-                  )}
-                >
-                  <div className={cn(
-                    "w-2 h-2 rounded-full",
-                    isDark ? "bg-samko-yellow" : "bg-samko-dark-red"
-                  )} />
-                  <span className={cn(
-                    "text-sm font-medium",
-                    isDark ? "text-white" : "text-gray-900"
-                  )}>
-                    {cert}
-                  </span>
-                </motion.div>
-              ))}
-            </div>
+
           </motion.div>
         </div>
       </div>

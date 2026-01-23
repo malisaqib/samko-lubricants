@@ -60,7 +60,7 @@ export default function CTASection() {
                 href="/contact"
                 className="group inline-flex items-center gap-2 px-6 py-3.5 bg-samko-yellow text-industrial-dark font-semibold text-sm hover:bg-samko-gold transition-colors duration-200"
               >
-                Request a Quote
+                Get in Touch
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
@@ -106,7 +106,7 @@ export default function CTASection() {
               </p>
               <p className="flex items-center gap-3">
                 <span className="w-1.5 h-1.5 rounded-full bg-samko-yellow" />
-                Global Shipping Network
+                Regional Delivery Network
               </p>
             </div>
           </motion.div>

@@ -9,10 +9,10 @@ import { cn } from "@/lib/utils";
 const stats = [
   {
     icon: Award,
-    value: 40,
+    value: 20,
     suffix: "+",
-    label: "Years of Excellence",
-    description: "Pioneering lubrication solutions since 1985",
+    label: "Years of Experience",
+    description: "Pioneering lubrication solutions with expertise",
   },
   {
     icon: Globe,

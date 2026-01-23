@@ -1,66 +1,92 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "next-themes";
 import Link from "next/link";
-import { ArrowRight, Droplets, Gauge, Cog, Factory, Truck, Ship } from "lucide-react";
+import { ArrowRight, Droplets, Gauge, Cog, Factory, Truck, Snowflake, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const products = [
   {
-    id: "engine",
-    name: "Engine Oils",
-    description: "High-performance lubricants for automotive and industrial engines",
+    id: "coolant",
+    name: "High Grade Coolant",
+    description: "Superior cooling protection for engines in extreme Pakistani summers",
+    useCase: "Trucks, Buses, Heavy Vehicles",
+    icon: Snowflake,
+  },
+  {
+    id: "engine-20w50",
+    name: "Engine Oil 20W-50",
+    description: "Multi-grade engine oil for optimal protection in all weather conditions",
+    useCase: "Motorcycles, Cars, Light Commercial Vehicles",
     icon: Gauge,
-    image: "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?q=80&w=1932",
   },
   {
-    id: "hydraulic",
-    name: "Hydraulic Fluids",
-    description: "Advanced fluids for optimal hydraulic system performance",
-    icon: Droplets,
-    image: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=2070",
+    id: "power-dexron",
+    name: "Power Oil Dexron ATF SAE-20",
+    description: "Automatic transmission fluid for smooth gear shifting and transmission longevity",
+    useCase: "Automatic Transmissions, Power Steering",
+    icon: Zap,
   },
   {
-    id: "gear",
-    name: "Gear Oils",
-    description: "Specialized lubricants for gearboxes and transmissions",
+    id: "gear-lube",
+    name: "Gear Lube ST-140 API-GL",
+    description: "Heavy-duty gear lubricant for extreme pressure protection in gearboxes",
+    useCase: "Cargo Trucks, Dumpers, Loader Rickshaws",
     icon: Cog,
-    image: "https://images.unsplash.com/photo-1565043666747-69f6646db940?q=80&w=2074",
   },
   {
-    id: "industrial",
-    name: "Industrial Oils",
-    description: "Comprehensive solutions for manufacturing and processing",
+    id: "pioneer-sae50",
+    name: "Engine Oil Pioneer SAE-50 API-CC/SD",
+    description: "Premium single-grade oil for diesel and petrol engines requiring robust protection",
+    useCase: "Diesel Generators, Agricultural Machinery",
     icon: Factory,
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070",
   },
   {
-    id: "transport",
-    name: "Transport Fluids",
-    description: "Reliable lubricants for heavy-duty transportation",
+    id: "hydraulic-hyd68",
+    name: "Hydraulic Fluid – Heavy Duty Hydraulic Oil SAE-HYD/68",
+    description: "High-performance hydraulic oil for demanding industrial and construction equipment",
+    useCase: "Excavators, Cranes, Hydraulic Lifts",
+    icon: Droplets,
+  },
+  {
+    id: "s4-super",
+    name: "Engine Oil S4 Super 20W-50",
+    description: "Enhanced multi-grade formula for superior engine cleanliness and wear protection",
+    useCase: "Motorcycles, Rickshaws, Commercial Vehicles",
+    icon: Gauge,
+  },
+  {
+    id: "hd-diesel",
+    name: "Lubricating Oil – Heavy Duty Diesel Engine Oil SAE-HD/50",
+    description: "Specially formulated for heavy-duty diesel engines under extreme load conditions",
+    useCase: "Cargo Trucks, Dumper Trucks, Buses",
     icon: Truck,
-    image: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2070",
-  },
-  {
-    id: "marine",
-    name: "Marine Lubricants",
-    description: "Specialized formulations for marine applications",
-    icon: Ship,
-    image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=2070",
   },
 ];
 
 export default function ProductsShowcase() {
   const [mounted, setMounted] = useState(false);
+  const [startIndex, setStartIndex] = useState(0);
   const { resolvedTheme } = useTheme();
   
-  useEffect(() => {
-    setMounted(true);
+  const rotateProducts = useCallback(() => {
+    setStartIndex((prev) => (prev + 4) % products.length);
   }, []);
 
+  useEffect(() => {
+    setMounted(true);
+    const interval = setInterval(rotateProducts, 4000);
+    return () => clearInterval(interval);
+  }, [rotateProducts]);
+
   const isDark = mounted ? resolvedTheme === "dark" : true;
+  
+  // Get 4 products starting from startIndex, wrapping around if needed
+  const visibleProducts = Array.from({ length: 4 }, (_, i) => 
+    products[(startIndex + i) % products.length]
+  );
 
   return (
     <section className={cn(
@@ -109,73 +135,70 @@ export default function ProductsShowcase() {
         </motion.div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products.map((product, index) => (
-            <motion.div
-              key={product.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-            >
-              <Link
-                href={`/products?category=${product.id}`}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <AnimatePresence mode="wait">
+            {visibleProducts.map((product, index) => (
+              <motion.div
+                key={`${product.id}-${startIndex}`}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+              >
+              <div
                 className={cn(
-                  "group block relative overflow-hidden rounded-sm transition-all duration-300",
+                  "group block relative overflow-hidden rounded-sm transition-all duration-300 h-full",
                   isDark 
-                    ? "bg-white/5 hover:bg-white/10 border border-white/5" 
-                    : "bg-white hover:shadow-lg border border-gray-100"
+                    ? "bg-white/5 hover:bg-white/10 border border-white/10 hover:border-samko-yellow/30" 
+                    : "bg-white hover:shadow-xl border border-gray-200 hover:border-samko-yellow"
                 )}
               >
-                {/* Image */}
-                <div className="relative h-48 overflow-hidden">
-                  <div
-                    className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-                    style={{ backgroundImage: `url(${product.image})` }}
-                  />
-                  <div className={cn(
-                    "absolute inset-0",
-                    isDark 
-                      ? "bg-gradient-to-t from-industrial-darker via-industrial-darker/50 to-transparent" 
-                      : "bg-gradient-to-t from-white via-white/50 to-transparent"
-                  )} />
-                </div>
-
                 {/* Content */}
-                <div className="relative p-6 -mt-12">
+                <div className="p-6 flex flex-col h-full">
+                  {/* Icon */}
                   <div className={cn(
-                    "inline-flex items-center justify-center w-12 h-12 rounded-sm mb-4",
+                    "inline-flex items-center justify-center w-14 h-14 rounded-sm mb-5",
                     isDark 
                       ? "bg-samko-yellow text-industrial-dark" 
                       : "bg-samko-yellow text-industrial-dark"
                   )}>
-                    <product.icon className="w-5 h-5" />
+                    <product.icon className="w-6 h-6" />
                   </div>
+                  
+                  {/* Product Name */}
                   <h3 className={cn(
-                    "text-xl font-semibold mb-2",
+                    "text-lg font-bold mb-3 leading-tight",
                     isDark ? "text-white" : "text-gray-900"
                   )}>
                     {product.name}
                   </h3>
+                  
+                  {/* Description */}
                   <p className={cn(
-                    "text-sm mb-4",
+                    "text-sm mb-4 grow",
                     isDark ? "text-gray-400" : "text-gray-600"
                   )}>
                     {product.description}
                   </p>
-                  <span className={cn(
-                    "inline-flex items-center gap-1 text-sm font-medium",
+                  
+                  {/* Use Case Badge */}
+                  <div className={cn(
+                    "px-3 py-2 rounded-sm text-xs font-medium",
                     isDark 
-                      ? "text-samko-yellow group-hover:text-samko-gold" 
-                      : "text-samko-dark-red group-hover:text-samko-red"
+                      ? "bg-industrial-dark/50 text-samko-yellow border border-samko-yellow/20" 
+                      : "bg-gray-100 text-gray-700 border border-gray-200"
                   )}>
-                    Learn more
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </span>
+                    <span className={cn(
+                      "font-semibold",
+                      isDark ? "text-samko-yellow/70" : "text-gray-500"
+                    )}>Used in:</span>{" "}
+                    {product.useCase}
+                  </div>
                 </div>
-              </Link>
+              </div>
             </motion.div>
           ))}
+          </AnimatePresence>
         </div>
       </div>
     </section>
