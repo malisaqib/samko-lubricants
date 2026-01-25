@@ -219,7 +219,7 @@ export default function AboutPage() {
                       animate={{ scaleX: 1 }}
                       transition={{ duration: 0.8, delay: 0.5 }}
                       className={cn(
-                        "absolute -bottom-2 left-0 right-0 h-1 rounded-full origin-left",
+                        "absolute -bottom-0.5 left-0 right-0 h-1 rounded-full origin-left",
                         isDark ? "bg-samko-yellow" : "bg-samko-dark-red"
                       )}
                     />

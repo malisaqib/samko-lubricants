@@ -50,6 +50,7 @@ interface StockPrice {
   name: string;
   code: string;
   price: number;
+  priceUSD: number;
   change: number;
   changePercent: number;
   currency: string;
@@ -922,13 +923,13 @@ export default function PricesPage() {
                         "text-2xl font-bold",
                         isDark ? "text-white" : "text-gray-900"
                       )}>
-                        {stock.currency === "SAR" ? "﷼" : "$"}{stock.price.toFixed(2)}
+                        ${stock.priceUSD?.toFixed(2) || stock.price.toFixed(2)}
                       </p>
                       <p className={cn(
                         "text-xs",
                         isDark ? "text-gray-500" : "text-gray-400"
                       )}>
-                        {stock.currency}
+                        USD
                       </p>
                     </div>
                     <div className={cn(

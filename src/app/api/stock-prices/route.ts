@@ -4,6 +4,7 @@ export interface StockPrice {
   name: string;
   code: string;
   price: number;
+  priceUSD: number;
   change: number;
   changePercent: number;
   currency: string;
@@ -27,6 +28,21 @@ export interface StockPriceResponse {
 let cachedStocks: { pakistani: StockPrice[]; international: StockPrice[] } | null = null;
 let lastFetchTime: number = 0;
 const CACHE_DURATION = 5 * 60 * 1000;
+
+// Exchange rates (approximate - updated periodically)
+// PKR to USD and SAR to USD
+const EXCHANGE_RATES = {
+  PKR_TO_USD: 0.0036, // ~278 PKR = 1 USD
+  SAR_TO_USD: 0.2667, // 3.75 SAR = 1 USD
+};
+
+// Helper function to convert to USD
+function convertToUSD(price: number, currency: string): number {
+  if (currency === "USD") return price;
+  if (currency === "PKR") return Number((price * EXCHANGE_RATES.PKR_TO_USD).toFixed(2));
+  if (currency === "SAR") return Number((price * EXCHANGE_RATES.SAR_TO_USD).toFixed(2));
+  return price;
+}
 
 // Pakistani stocks - Yahoo Finance symbols for PSX
 const pakistaniStockConfig = [
@@ -100,6 +116,7 @@ async function fetchStockPrices(): Promise<{ pakistani: StockPrice[]; internatio
   // Fetch ALL international stocks in parallel
   const internationalPromises = internationalStockConfig.map(async (config) => {
     const realData = await fetchYahooFinanceStock(config.symbol);
+    const price = realData?.price ?? config.fallbackPrice;
     
     const stockData: StockPrice = {
       name: config.name,
@@ -109,7 +126,8 @@ async function fetchStockPrices(): Promise<{ pakistani: StockPrice[]; internatio
       exchange: config.exchange,
       category: "international",
       lastUpdated: now.toISOString(),
-      price: realData?.price ?? config.fallbackPrice,
+      price: price,
+      priceUSD: convertToUSD(price, config.currency),
       change: realData?.change ?? 0,
       changePercent: realData?.changePercent ?? 0,
     };
@@ -120,6 +138,7 @@ async function fetchStockPrices(): Promise<{ pakistani: StockPrice[]; internatio
   // Fetch Pakistani stocks in parallel
   const pakistaniPromises = pakistaniStockConfig.map(async (config) => {
     const realData = await fetchYahooFinanceStock(config.symbol);
+    const price = realData?.price ?? config.fallbackPrice;
     
     const stockData: StockPrice = {
       name: config.name,
@@ -129,7 +148,8 @@ async function fetchStockPrices(): Promise<{ pakistani: StockPrice[]; internatio
       exchange: config.exchange,
       category: "pakistani",
       lastUpdated: now.toISOString(),
-      price: realData?.price ?? config.fallbackPrice,
+      price: price,
+      priceUSD: convertToUSD(price, config.currency),
       change: realData?.change ?? 0,
       changePercent: realData?.changePercent ?? 0,
     };
@@ -181,6 +201,7 @@ export async function GET() {
       name: c.name,
       code: c.code,
       price: c.fallbackPrice,
+      priceUSD: convertToUSD(c.fallbackPrice, c.currency),
       change: 0,
       changePercent: 0,
       currency: c.currency,
@@ -194,6 +215,7 @@ export async function GET() {
       name: c.name,
       code: c.code,
       price: c.fallbackPrice,
+      priceUSD: convertToUSD(c.fallbackPrice, c.currency),
       change: 0,
       changePercent: 0,
       currency: c.currency,
