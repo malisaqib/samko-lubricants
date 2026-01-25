@@ -134,7 +134,7 @@ export default function AboutPage() {
   const isDark = mounted ? resolvedTheme === "dark" : true;
 
   return (
-    <div className={cn("min-h-screen transition-colors overflow-hidden", isDark ? "bg-industrial-darker" : "bg-gray-50")}>
+    <div className={cn("min-h-screen transition-colors overflow-hidden", isDark ? "bg-industrial-darker" : "bg-gradient-to-b from-white via-gray-50 to-white")}>
       
       {/* ==================== HERO SECTION ==================== */}
       <section ref={heroRef} className="relative min-h-[90vh] flex items-center overflow-hidden">
@@ -530,7 +530,7 @@ export default function AboutPage() {
       </section>
 
       {/* ==================== WHAT WE SERVE SECTION ==================== */}
-      <section className={cn("py-24 relative overflow-hidden", isDark ? "bg-industrial-darker" : "bg-gray-50")}>
+      <section className={cn("py-24 relative overflow-hidden", isDark ? "bg-industrial-darker" : "bg-gradient-to-b from-gray-50/50 via-white to-gray-50/50")}>
         {/* Background decoration */}
         <div className="absolute inset-0 overflow-hidden">
           <motion.div
@@ -594,7 +594,7 @@ export default function AboutPage() {
                   "group relative p-6 rounded-2xl text-center cursor-pointer overflow-hidden",
                   isDark 
                     ? "bg-white/5 border border-white/10 hover:border-samko-yellow/50" 
-                    : "bg-white border border-gray-200 hover:border-samko-red/50 shadow-sm hover:shadow-xl"
+                    : "bg-gradient-to-br from-white to-gray-50 border border-gray-200/80 hover:border-samko-red/50 shadow-lg hover:shadow-xl"
                 )}
               >
                 {/* Hover gradient overlay */}
@@ -766,7 +766,7 @@ export default function AboutPage() {
       </section>
 
       {/* ==================== WHY TRUST SAMKO SECTION ==================== */}
-      <section className={cn("py-24 relative overflow-hidden", isDark ? "bg-industrial-darker" : "bg-gray-50")}>
+      <section className={cn("py-24 relative overflow-hidden", isDark ? "bg-industrial-darker" : "bg-gradient-to-b from-red-50/30 via-white to-gray-50/50")}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial="hidden"
@@ -809,7 +809,7 @@ export default function AboutPage() {
                   "relative p-8 rounded-2xl text-center group overflow-hidden",
                   isDark 
                     ? "bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 hover:border-samko-yellow/30" 
-                    : "bg-white border border-gray-200 shadow-sm hover:shadow-xl hover:border-samko-red/30"
+                    : "bg-gradient-to-br from-white to-gray-50 border border-gray-200/80 shadow-lg hover:shadow-xl hover:border-samko-red/30"
                 )}
               >
                 {/* Animated background */}
@@ -831,7 +831,7 @@ export default function AboutPage() {
                       "w-16 h-16 rounded-2xl mx-auto flex items-center justify-center mb-6",
                       isDark 
                         ? "bg-samko-yellow/10 group-hover:bg-samko-yellow/20" 
-                        : "bg-samko-red/10 group-hover:bg-samko-red/20"
+                        : "bg-gradient-to-br from-red-100 to-red-50 border border-red-200/50 group-hover:from-red-200 group-hover:to-red-100"
                     )}
                   >
                     <factor.icon className={cn(
@@ -907,14 +907,14 @@ export default function AboutPage() {
                 "p-6 rounded-2xl text-center group cursor-pointer transition-all",
                 isDark 
                   ? "bg-white/5 border border-white/10 hover:border-samko-yellow/50 hover:bg-white/10" 
-                  : "bg-gray-50 border border-gray-200 hover:border-samko-red/50 hover:shadow-lg"
+                  : "bg-gradient-to-br from-white to-gray-50 border border-gray-200/80 hover:border-samko-red/50 shadow-lg hover:shadow-xl"
               )}
             >
               <div className={cn(
                 "w-14 h-14 rounded-full mx-auto flex items-center justify-center mb-4 transition-colors",
                 isDark 
                   ? "bg-samko-yellow/10 group-hover:bg-samko-yellow/20" 
-                  : "bg-samko-red/10 group-hover:bg-samko-red/20"
+                  : "bg-gradient-to-br from-red-100 to-red-50 border border-red-200/50 group-hover:from-red-200 group-hover:to-red-100"
               )}>
                 <MapPin className={cn("w-6 h-6", isDark ? "text-samko-yellow" : "text-samko-dark-red")} />
               </div>
@@ -938,14 +938,14 @@ export default function AboutPage() {
                 "p-6 rounded-2xl text-center group cursor-pointer transition-all",
                 isDark 
                   ? "bg-white/5 border border-white/10 hover:border-samko-yellow/50 hover:bg-white/10" 
-                  : "bg-gray-50 border border-gray-200 hover:border-samko-red/50 hover:shadow-lg"
+                  : "bg-gradient-to-br from-white to-gray-50 border border-gray-200/80 hover:border-samko-red/50 shadow-lg hover:shadow-xl"
               )}
             >
               <div className={cn(
                 "w-14 h-14 rounded-full mx-auto flex items-center justify-center mb-4 transition-colors",
                 isDark 
                   ? "bg-samko-yellow/10 group-hover:bg-samko-yellow/20" 
-                  : "bg-samko-red/10 group-hover:bg-samko-red/20"
+                  : "bg-gradient-to-br from-red-100 to-red-50 border border-red-200/50 group-hover:from-red-200 group-hover:to-red-100"
               )}>
                 <Phone className={cn("w-6 h-6", isDark ? "text-samko-yellow" : "text-samko-dark-red")} />
               </div>
@@ -969,14 +969,14 @@ export default function AboutPage() {
                 "p-6 rounded-2xl text-center group cursor-pointer transition-all",
                 isDark 
                   ? "bg-white/5 border border-white/10 hover:border-samko-yellow/50 hover:bg-white/10" 
-                  : "bg-gray-50 border border-gray-200 hover:border-samko-red/50 hover:shadow-lg"
+                  : "bg-gradient-to-br from-white to-gray-50 border border-gray-200/80 hover:border-samko-red/50 shadow-lg hover:shadow-xl"
               )}
             >
               <div className={cn(
                 "w-14 h-14 rounded-full mx-auto flex items-center justify-center mb-4 transition-colors",
                 isDark 
                   ? "bg-samko-yellow/10 group-hover:bg-samko-yellow/20" 
-                  : "bg-samko-red/10 group-hover:bg-samko-red/20"
+                  : "bg-gradient-to-br from-red-100 to-red-50 border border-red-200/50 group-hover:from-red-200 group-hover:to-red-100"
               )}>
                 <Mail className={cn("w-6 h-6", isDark ? "text-samko-yellow" : "text-samko-dark-red")} />
               </div>
@@ -998,12 +998,12 @@ export default function AboutPage() {
                 "p-6 rounded-2xl text-center",
                 isDark 
                   ? "bg-white/5 border border-white/10" 
-                  : "bg-gray-50 border border-gray-200"
+                  : "bg-gradient-to-br from-white to-gray-50 border border-gray-200/80 shadow-lg"
               )}
             >
               <div className={cn(
                 "w-14 h-14 rounded-full mx-auto flex items-center justify-center mb-4",
-                isDark ? "bg-samko-yellow/10" : "bg-samko-red/10"
+                isDark ? "bg-samko-yellow/10" : "bg-gradient-to-br from-red-100 to-red-50 border border-red-200/50"
               )}>
                 <span className={cn("text-2xl")}>🌐</span>
               </div>

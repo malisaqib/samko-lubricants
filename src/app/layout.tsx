@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ScrollProgress from "@/components/layout/ScrollProgress";
+import ScrollToTop from "@/components/layout/ScrollToTop";
 
 // Clean, minimalist font - Apple-style aesthetic
 const inter = Inter({
@@ -14,9 +15,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "SAMKO Lubricants | Premium Industrial Lubrication Solutions",
-  description: "Industry-leading lubricants engineered for excellence. Trusted by manufacturers worldwide for over 40 years. Engine oils, hydraulic fluids, gear oils, and more.",
-  keywords: "industrial lubricants, engine oil, hydraulic fluid, gear oil, SAMKO, premium lubricants",
+  title: "SAMKO Lubricants | Pakistan Ka Apna Lubricant Brand",
+  description: "Premium quality engine oils & lubricants made in Pakistan. From motorcycles to trucks - SAMKO keeps Pakistan moving. Trusted by mechanics nationwide.",
+  keywords: "engine oil Pakistan, lubricants Sargodha, motor oil, gear oil, hydraulic oil, SAMKO lubricants, Pakistani oil company",
 };
 
 export default function RootLayout({
@@ -34,6 +35,7 @@ export default function RootLayout({
           disableTransitionOnChange={false}
         >
           <ScrollProgress />
+          <ScrollToTop />
           <Navbar />
           <main className="min-h-screen">{children}</main>
           <Footer />

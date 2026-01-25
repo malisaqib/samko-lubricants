@@ -131,7 +131,7 @@ export default function ProductsPage() {
   return (
     <div className={cn(
       "min-h-screen transition-colors duration-300",
-      isDark ? "bg-industrial-darker" : "bg-gray-50"
+      isDark ? "bg-industrial-darker" : "bg-gradient-to-b from-gray-50 via-white to-gray-50"
     )}>
       {/* Hero Section with Floating Elements */}
       <section className="relative pt-32 pb-24 overflow-hidden">
@@ -233,7 +233,7 @@ export default function ProductsPage() {
         "relative py-8 border-y",
         isDark 
           ? "bg-industrial-dark/50 border-white/5" 
-          : "bg-white border-gray-200"
+          : "bg-white border-gray-100 shadow-sm"
       )}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
@@ -249,18 +249,18 @@ export default function ProductsPage() {
                 variants={itemVariants}
                 whileHover={{ scale: 1.05, y: -5 }}
                 className={cn(
-                  "flex items-center gap-4 p-4 rounded-lg cursor-default transition-all duration-300",
+                  "flex items-center gap-4 p-4 rounded-xl cursor-default transition-all duration-300",
                   isDark 
                     ? "hover:bg-white/5" 
-                    : "hover:bg-gray-50 hover:shadow-lg"
+                    : "hover:bg-red-50/50 hover:shadow-lg border border-transparent hover:border-red-100"
                 )}
               >
                 <motion.div 
                   className={cn(
-                    "flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center",
+                    "flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center",
                     isDark 
                       ? "bg-samko-yellow/10 text-samko-yellow" 
-                      : "bg-samko-red/10 text-samko-dark-red"
+                      : "bg-gradient-to-br from-red-100 to-red-50 text-samko-dark-red border border-red-200"
                   )}
                   whileHover={{ rotate: [0, -10, 10, 0] }}
                   transition={{ duration: 0.5 }}
@@ -327,10 +327,10 @@ export default function ProductsPage() {
                 className="group relative"
               >
                 <div className={cn(
-                  "relative h-full rounded-xl overflow-hidden transition-all duration-500",
+                  "relative h-full rounded-2xl overflow-hidden transition-all duration-500",
                   isDark 
                     ? "bg-gradient-to-br from-white/10 to-white/5 border border-white/10 hover:border-samko-yellow/50 hover:shadow-2xl hover:shadow-samko-yellow/10" 
-                    : "bg-white border border-gray-200 hover:border-samko-dark-red/30 hover:shadow-2xl hover:shadow-gray-300/50"
+                    : "bg-white border border-gray-200 hover:border-samko-dark-red/40 shadow-lg hover:shadow-2xl"
                 )}>
                   {/* Badge */}
                   <motion.div 

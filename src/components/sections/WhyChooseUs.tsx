@@ -10,23 +10,23 @@ import { cn } from "@/lib/utils";
 const features = [
   {
     icon: Zap,
-    title: "High Performance",
-    description: "Engineered for maximum efficiency and protection in demanding conditions",
+    title: "Made for Pakistani Roads",
+    description: "Formulated for extreme heat, dusty conditions & stop-go traffic of our cities",
   },
   {
     icon: Shield,
-    title: "Proven Reliability",
-    description: "Tested and trusted by industries worldwide for over four decades",
+    title: "Trusted by Mechanics",
+    description: "Ask any local workshop - they know SAMKO delivers real results",
   },
   {
     icon: Leaf,
-    title: "Eco-Friendly",
-    description: "Sustainable formulations that meet environmental standards",
+    title: "Fair Pricing",
+    description: "Premium quality at prices that make sense for Pakistani consumers",
   },
   {
     icon: Award,
-    title: "Certified Quality",
-    description: "ISO certified manufacturing processes and quality control",
+    title: "From Sargodha, For Pakistan",
+    description: "Proudly manufactured locally with quality you can trust",
   },
 ];
 
@@ -47,7 +47,7 @@ export default function WhyChooseUs() {
       "relative py-24 transition-colors duration-300",
       isDark 
         ? "bg-industrial-dark" 
-        : "bg-white"
+        : "bg-gradient-to-br from-white via-red-50/30 to-white"
     )}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -71,9 +71,9 @@ export default function WhyChooseUs() {
               "font-heading text-4xl md:text-5xl font-semibold tracking-tight mb-6",
               isDark ? "text-white" : "text-gray-900"
             )}>
-              The Trusted Name in{" "}
+              Engineered for{" "}
               <span className={isDark ? "text-samko-yellow" : "text-samko-dark-red"}>
-                Industrial Lubrication
+                Pakistan
               </span>
             </h2>
 
@@ -81,8 +81,8 @@ export default function WhyChooseUs() {
               "text-lg mb-8 leading-relaxed",
               isDark ? "text-gray-400" : "text-gray-600"
             )}>
-              For over 40 years, SAMKO has been at the forefront of lubrication technology, 
-              delivering products that exceed industry standards and customer expectations.
+              From rickshaws in Karachi to trucks on the Karakoram Highway — SAMKO keeps 
+              Pakistan moving. We understand your engines because we're from here.
             </p>
 
             {/* Features */}
@@ -97,10 +97,10 @@ export default function WhyChooseUs() {
                   className="flex gap-4"
                 >
                   <div className={cn(
-                    "flex-shrink-0 w-10 h-10 rounded-sm flex items-center justify-center",
+                    "flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center",
                     isDark 
                       ? "bg-samko-yellow/10" 
-                      : "bg-samko-red/5"
+                      : "bg-gradient-to-br from-red-100 to-red-50 border border-red-200 shadow-sm"
                   )}>
                     <feature.icon className={cn(
                       "w-5 h-5",
@@ -127,43 +127,120 @@ export default function WhyChooseUs() {
 
             <Link
               href="/about"
-              className="group inline-flex items-center gap-2 px-6 py-3 bg-samko-yellow text-industrial-dark font-semibold text-sm hover:bg-samko-gold transition-colors duration-200"
+              className="btn-primary"
             >
               Learn More About Us
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-4 h-4" />
             </Link>
           </motion.div>
 
-          {/* Right Content - Certifications */}
+          {/* Right Content - Images Grid */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className={cn(
-              "relative p-8 rounded-sm",
-              isDark 
-                ? "bg-white/5 border border-white/5" 
-                : "bg-gray-50 border border-gray-100"
-            )}
+            className="grid grid-cols-2 gap-4"
           >
-            {/* Image */}
-            <div className="relative h-64 mb-8 overflow-hidden rounded-sm">
+            {/* Image 1 - Mechanic at work */}
+            <div className={cn(
+              "relative h-72 overflow-hidden rounded-2xl group",
+              isDark ? "ring-1 ring-white/10" : "shadow-lg"
+            )}>
               <div
-                className="absolute inset-0 bg-cover bg-center"
+                className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
                 style={{ 
-                  backgroundImage: `url(https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=2070)` 
+                  backgroundImage: `url(https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?q=80&w=1974)` 
                 }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
               <div className="absolute bottom-4 left-4 right-4">
-                <p className="text-white text-sm font-medium">
-                  State-of-the-art manufacturing facility
+                <p className={cn(
+                  "text-sm font-semibold",
+                  "text-white"
+                )}>
+                  🔧 Trusted by Mechanics
+                </p>
+                <p className="text-white/80 text-xs mt-1">
+                  Every workshop across Pakistan
                 </p>
               </div>
             </div>
 
+            {/* Image 2 - Oil/Engine */}
+            <div className={cn(
+              "relative h-72 overflow-hidden rounded-2xl group",
+              isDark ? "ring-1 ring-white/10" : "shadow-lg"
+            )}>
+              <div
+                className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                style={{ 
+                  backgroundImage: `url(/whyus2.png)` 
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4">
+                <p className={cn(
+                  "text-sm font-semibold",
+                  "text-white"
+                )}>
+                  🚗 Made for Every Vehicle
+                </p>
+                <p className="text-white/80 text-xs mt-1">
+                  Cars, bikes, trucks & more
+                </p>
+              </div>
+            </div>
 
+            {/* Image 3 - Trucks/Highway */}
+            <div className={cn(
+              "relative h-72 overflow-hidden rounded-2xl group",
+              isDark ? "ring-1 ring-white/10" : "shadow-lg"
+            )}>
+              <div
+                className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                style={{ 
+                  backgroundImage: `url(https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?q=80&w=2070)` 
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4">
+                <p className={cn(
+                  "text-sm font-semibold",
+                  "text-white"
+                )}>
+                  🚛 Long Haul Ready
+                </p>
+                <p className="text-white/80 text-xs mt-1">
+                  Lahore to Karachi, non-stop
+                </p>
+              </div>
+            </div>
+
+            {/* Image 4 - Quality */}
+            <div className={cn(
+              "relative h-72 overflow-hidden rounded-2xl group",
+              isDark ? "ring-1 ring-white/10" : "shadow-lg"
+            )}>
+              <div
+                className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                style={{ 
+                  backgroundImage: `url(https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=2032)` 
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4">
+                <p className={cn(
+                  "text-sm font-semibold",
+                  "text-white"
+                )}>
+                  ⭐ Premium Quality
+                </p>
+                <p className="text-white/80 text-xs mt-1">
+                  Made in Sargodha with pride
+                </p>
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>

@@ -58,17 +58,17 @@ export default function CTASection() {
             <div className="flex flex-wrap gap-4">
               <Link
                 href="/contact"
-                className="group inline-flex items-center gap-2 px-6 py-3.5 bg-samko-yellow text-industrial-dark font-semibold text-sm hover:bg-samko-gold transition-colors duration-200"
+                className="btn-primary"
               >
                 Get in Touch
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 href="/dealer"
-                className="group inline-flex items-center gap-2 px-6 py-3.5 bg-transparent border border-white/30 text-white font-semibold text-sm hover:bg-white/10 hover:border-white/50 transition-all duration-200"
+                className="btn-secondary btn-secondary-dark"
               >
                 Become a Dealer
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </motion.div>
@@ -86,8 +86,8 @@ export default function CTASection() {
                 <Phone className="w-5 h-5 text-industrial-dark" />
               </div>
               <div>
-                <p className="text-sm text-white/60">Call us directly</p>
-                <p className="text-xl font-semibold text-white">+971 4 123 4567</p>
+                <p className="text-sm text-white/60">Call / WhatsApp</p>
+                <p className="text-xl font-semibold text-white">+92 315 3210929</p>
               </div>
             </div>
 

@@ -55,6 +55,7 @@ interface StockPrice {
   currency: string;
   logo: string;
   exchange: string;
+  category: "pakistani" | "international";
   lastUpdated: string;
 }
 
@@ -88,7 +89,8 @@ export default function PricesPage() {
   // API data states
   const [oilPrices, setOilPrices] = useState<OilPrice[]>([]);
   const [petrolPrices, setPetrolPrices] = useState<PetrolPrice[]>([]);
-  const [stockPrices, setStockPrices] = useState<StockPrice[]>([]);
+  const [pakistaniStocks, setPakistaniStocks] = useState<StockPrice[]>([]);
+  const [internationalStocks, setInternationalStocks] = useState<StockPrice[]>([]);
   const [baseOilPrices, setBaseOilPrices] = useState<BaseOilPrice[]>([]);
   
   // Loading states
@@ -151,7 +153,8 @@ export default function PricesPage() {
       const res = await fetch('/api/stock-prices');
       const data = await res.json();
       if (data.success) {
-        setStockPrices(data.data);
+        setPakistaniStocks(data.data.pakistani);
+        setInternationalStocks(data.data.international);
       } else {
         setErrorStocks('Failed to fetch stock prices');
       }
@@ -232,7 +235,7 @@ export default function PricesPage() {
   };
 
   return (
-    <div className={cn("min-h-screen transition-colors", isDark ? "bg-industrial-darker" : "bg-gray-50")}>
+    <div className={cn("min-h-screen transition-colors", isDark ? "bg-industrial-darker" : "bg-gradient-to-b from-white via-gray-50 to-white")}>
       
       {/* Hero Section */}
       <section className="relative pt-32 pb-16 overflow-hidden">
@@ -318,130 +321,196 @@ export default function PricesPage() {
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          {/* Crude Oil Prices - Main Cards */}
+          {/* Crude Oil Prices - Premium Design */}
           <motion.div
-            initial="hidden"
-            whileInView="visible"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            variants={staggerContainer}
-            className="mb-12"
+            className="mb-16"
           >
-            <div className="flex items-center justify-between mb-6">
-              <h2 className={cn(
-                "text-2xl font-bold flex items-center gap-3",
-                isDark ? "text-white" : "text-gray-900"
-              )}>
-                <Flame className={cn("w-6 h-6", isDark ? "text-samko-yellow" : "text-samko-dark-red")} />
-                Crude Oil & Energy
-              </h2>
-              <button 
-                onClick={fetchAllData}
-                disabled={isRefreshing}
-                className={cn(
-                  "flex items-center gap-2 text-sm font-medium transition-colors disabled:opacity-50",
-                  isDark ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-gray-900"
-                )}
-              >
-                <RefreshCw className={cn("w-4 h-4", isRefreshing && "animate-spin")} />
-                {isRefreshing ? "Refreshing..." : "Refresh"}
-              </button>
+            {/* Section Header with Badge */}
+            <div className={cn(
+              "rounded-2xl p-6 mb-6",
+              isDark 
+                ? "bg-gradient-to-r from-orange-900/30 via-red-900/20 to-orange-900/30 border border-orange-500/20" 
+                : "bg-gradient-to-r from-orange-50 via-red-50 to-orange-50 border border-orange-200"
+            )}>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-center gap-4">
+                  <div className={cn(
+                    "p-3 rounded-xl",
+                    isDark ? "bg-orange-500/20" : "bg-orange-100"
+                  )}>
+                    <Flame className={cn("w-8 h-8", isDark ? "text-orange-400" : "text-orange-600")} />
+                  </div>
+                  <div>
+                    <h2 className={cn(
+                      "text-2xl font-bold",
+                      isDark ? "text-white" : "text-gray-900"
+                    )}>
+                      Crude Oil & Energy
+                    </h2>
+                    <p className={cn(
+                      "text-sm",
+                      isDark ? "text-gray-400" : "text-gray-600"
+                    )}>
+                      Live international commodity prices
+                    </p>
+                  </div>
+                </div>
+                <button 
+                  onClick={fetchAllData}
+                  disabled={isRefreshing}
+                  className={cn(
+                    "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all disabled:opacity-50",
+                    isDark 
+                      ? "bg-white/10 hover:bg-white/20 text-white" 
+                      : "bg-white hover:bg-gray-50 text-gray-700 shadow-sm border border-gray-200"
+                  )}
+                >
+                  <RefreshCw className={cn("w-4 h-4", isRefreshing && "animate-spin")} />
+                  {isRefreshing ? "Updating..." : "Refresh"}
+                </button>
+              </div>
             </div>
             
             {loadingOil ? (
-              <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
                 {[1, 2, 3, 4, 5].map((i) => (
                   <div key={i} className={cn(
                     "p-6 rounded-2xl animate-pulse",
-                    isDark ? "bg-white/5" : "bg-gray-100"
+                    isDark ? "bg-white/5 border border-white/10" : "bg-white border border-gray-200 shadow-lg"
                   )}>
-                    <div className={cn("h-4 w-16 rounded mb-2", isDark ? "bg-white/10" : "bg-gray-200")} />
-                    <div className={cn("h-6 w-24 rounded mb-4", isDark ? "bg-white/10" : "bg-gray-200")} />
-                    <div className={cn("h-8 w-20 rounded", isDark ? "bg-white/10" : "bg-gray-200")} />
+                    <div className="flex justify-between items-start mb-4">
+                      <div className={cn("h-10 w-10 rounded-full", isDark ? "bg-white/10" : "bg-gray-200")} />
+                      <div className={cn("h-6 w-16 rounded-full", isDark ? "bg-white/10" : "bg-gray-200")} />
+                    </div>
+                    <div className={cn("h-4 w-24 rounded mb-2", isDark ? "bg-white/10" : "bg-gray-200")} />
+                    <div className={cn("h-8 w-28 rounded", isDark ? "bg-white/10" : "bg-gray-200")} />
                   </div>
                 ))}
               </div>
             ) : errorOil ? (
               <div className={cn(
-                "p-6 rounded-2xl flex items-center gap-3",
-                isDark ? "bg-red-500/10 text-red-400" : "bg-red-50 text-red-600"
+                "p-8 rounded-2xl flex flex-col items-center justify-center gap-4 text-center",
+                isDark ? "bg-red-500/10 border border-red-500/20" : "bg-red-50 border border-red-200"
               )}>
-                <AlertCircle className="w-5 h-5" />
-                {errorOil}
-              </div>
-            ) : (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
-              {oilPrices.map((oil, index) => (
-                <motion.div
-                  key={oil.code}
-                  variants={fadeInUp}
-                  whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                <AlertCircle className={cn("w-12 h-12", isDark ? "text-red-400" : "text-red-500")} />
+                <div>
+                  <p className={cn("font-semibold mb-1", isDark ? "text-red-400" : "text-red-600")}>
+                    Failed to load prices
+                  </p>
+                  <p className={cn("text-sm", isDark ? "text-red-400/70" : "text-red-500/70")}>
+                    {errorOil}
+                  </p>
+                </div>
+                <button 
+                  onClick={fetchAllData}
                   className={cn(
-                    "relative p-6 rounded-2xl overflow-hidden group cursor-pointer",
-                    isDark 
-                      ? "bg-gradient-to-br from-white/10 to-white/5 border border-white/10 hover:border-samko-yellow/30" 
-                      : "bg-white border border-gray-200 shadow-sm hover:shadow-lg hover:border-samko-red/30"
+                    "px-4 py-2 rounded-lg text-sm font-medium transition-colors",
+                    isDark ? "bg-red-500/20 hover:bg-red-500/30 text-red-400" : "bg-red-100 hover:bg-red-200 text-red-600"
                   )}
                 >
-                  {/* Trend indicator line */}
-                  <div className={cn(
-                    "absolute top-0 left-0 right-0 h-1",
-                    oil.change >= 0 ? "bg-green-500" : "bg-red-500"
-                  )} />
-                  
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
+                  Try Again
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                {oilPrices.map((oil, index) => {
+                  const icons: Record<string, string> = {
+                    'BRENT': '🛢️',
+                    'WTI': '⚫',
+                    'NG': '🔥',
+                    'HO': '🔶',
+                    'RB': '⛽'
+                  };
+                  return (
+                    <motion.div
+                      key={oil.code}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.1 }}
+                      whileHover={{ y: -5, scale: 1.02 }}
+                      className={cn(
+                        "relative p-6 rounded-2xl overflow-hidden cursor-pointer transition-all duration-300",
+                        isDark 
+                          ? "bg-gradient-to-br from-gray-800/80 to-gray-900/80 border border-white/10 hover:border-orange-500/50 shadow-xl" 
+                          : "bg-white border-2 border-gray-100 hover:border-orange-300 shadow-lg hover:shadow-2xl"
+                      )}
+                    >
+                      {/* Top accent bar */}
+                      <div className={cn(
+                        "absolute top-0 left-0 right-0 h-1.5 rounded-t-2xl",
+                        oil.change >= 0 
+                          ? "bg-gradient-to-r from-green-400 to-emerald-500" 
+                          : "bg-gradient-to-r from-red-400 to-rose-500"
+                      )} />
+                      
+                      {/* Header */}
+                      <div className="flex items-start justify-between mb-4">
+                        <div className={cn(
+                          "text-3xl p-2 rounded-xl",
+                          isDark ? "bg-white/5" : "bg-gray-50"
+                        )}>
+                          {icons[oil.code] || '🛢️'}
+                        </div>
+                        <div className={cn(
+                          "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-bold",
+                          oil.change >= 0
+                            ? isDark ? "bg-green-500/20 text-green-400" : "bg-green-100 text-green-700"
+                            : isDark ? "bg-red-500/20 text-red-400" : "bg-red-100 text-red-700"
+                        )}>
+                          {oil.change >= 0 ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
+                          {oil.changePercent >= 0 ? "+" : ""}{oil.changePercent.toFixed(2)}%
+                        </div>
+                      </div>
+                      
+                      {/* Code & Name */}
+                      <div className="mb-3">
+                        <p className={cn(
+                          "text-xs font-bold uppercase tracking-wider mb-1",
+                          isDark ? "text-orange-400" : "text-orange-600"
+                        )}>
+                          {oil.code}
+                        </p>
+                        <p className={cn(
+                          "text-sm font-medium leading-tight",
+                          isDark ? "text-gray-300" : "text-gray-600"
+                        )}>
+                          {oil.name}
+                        </p>
+                      </div>
+                      
+                      {/* Price */}
+                      <div className="flex items-baseline gap-2">
+                        <p className={cn(
+                          "text-3xl font-black tracking-tight",
+                          isDark ? "text-white" : "text-gray-900"
+                        )}>
+                          ${oil.price.toFixed(2)}
+                        </p>
+                        <span className={cn(
+                          "text-xs font-medium",
+                          isDark ? "text-gray-500" : "text-gray-400"
+                        )}>
+                          /{oil.unit}
+                        </span>
+                      </div>
+                      
+                      {/* Change amount */}
                       <p className={cn(
-                        "text-xs font-medium uppercase tracking-wider mb-1",
-                        isDark ? "text-gray-400" : "text-gray-500"
+                        "text-sm font-semibold mt-2",
+                        oil.change >= 0 
+                          ? isDark ? "text-green-400" : "text-green-600"
+                          : isDark ? "text-red-400" : "text-red-600"
                       )}>
-                        {oil.code}
+                        {oil.change >= 0 ? "+" : ""}{oil.change.toFixed(2)} today
                       </p>
-                      <p className={cn(
-                        "text-sm font-medium",
-                        isDark ? "text-gray-300" : "text-gray-700"
-                      )}>
-                        {oil.name}
-                      </p>
-                    </div>
-                    <div className={cn(
-                      "p-2 rounded-lg",
-                      getTrendBg(oil.change)
-                    )}>
-                      <span className={getTrendColor(oil.change)}>
-                        {getTrendIcon(oil.change)}
-                      </span>
-                    </div>
-                  </div>
-                  
-                  <p className={cn(
-                    "text-3xl font-bold mb-1",
-                    isDark ? "text-white" : "text-gray-900"
-                  )}>
-                    ${oil.price.toFixed(2)}
-                  </p>
-                  
-                  <div className="flex items-center gap-2">
-                    <span className={cn("text-sm font-medium", getTrendColor(oil.change))}>
-                      {oil.change >= 0 ? "+" : ""}{oil.change.toFixed(2)}
-                    </span>
-                    <span className={cn(
-                      "text-xs px-2 py-0.5 rounded-full",
-                      getTrendBg(oil.change),
-                      getTrendColor(oil.change)
-                    )}>
-                      {oil.changePercent >= 0 ? "+" : ""}{oil.changePercent.toFixed(2)}%
-                    </span>
-                  </div>
-                  
-                  <p className={cn(
-                    "text-xs mt-2",
-                    isDark ? "text-gray-500" : "text-gray-400"
-                  )}>
-                    {oil.unit}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
             )}
           </motion.div>
 
@@ -468,7 +537,7 @@ export default function PricesPage() {
                 "rounded-2xl overflow-hidden",
                 isDark 
                   ? "bg-white/5 border border-white/10" 
-                  : "bg-white border border-gray-200 shadow-sm"
+                  : "bg-gradient-to-br from-white to-gray-50 border border-gray-200/80 shadow-lg"
               )}
             >
               <div className={cn(
@@ -490,7 +559,7 @@ export default function PricesPage() {
                   {[1, 2, 3, 4, 5, 6].map((i) => (
                     <div key={i} className={cn(
                       "flex items-center justify-between animate-pulse",
-                      isDark ? "bg-white/5" : "bg-gray-50"
+                      isDark ? "bg-white/5" : "bg-gray-100"
                     )}>
                       <div className={cn("h-6 w-32 rounded", isDark ? "bg-white/10" : "bg-gray-200")} />
                       <div className={cn("h-6 w-24 rounded", isDark ? "bg-white/10" : "bg-gray-200")} />
@@ -565,7 +634,7 @@ export default function PricesPage() {
                 "rounded-2xl overflow-hidden",
                 isDark 
                   ? "bg-white/5 border border-white/10" 
-                  : "bg-white border border-gray-200 shadow-sm"
+                  : "bg-gradient-to-br from-white to-gray-50 border border-gray-200/80 shadow-lg"
               )}
             >
               <div className={cn(
@@ -587,7 +656,7 @@ export default function PricesPage() {
                   {[1, 2, 3, 4, 5].map((i) => (
                     <div key={i} className={cn(
                       "flex items-center justify-between p-4 rounded-xl animate-pulse",
-                      isDark ? "bg-white/5" : "bg-gray-50"
+                      isDark ? "bg-white/5" : "bg-gray-100"
                     )}>
                       <div className={cn("h-6 w-40 rounded", isDark ? "bg-white/10" : "bg-gray-200")} />
                       <div className={cn("h-8 w-24 rounded", isDark ? "bg-white/10" : "bg-gray-200")} />
@@ -613,7 +682,7 @@ export default function PricesPage() {
                     transition={{ delay: index * 0.1 }}
                     className={cn(
                       "flex items-center justify-between p-4 rounded-xl",
-                      isDark ? "bg-white/5" : "bg-gray-50"
+                      isDark ? "bg-white/5" : "bg-gradient-to-r from-gray-50 to-gray-100/50 border border-gray-200/50"
                     )}
                   >
                     <div>
@@ -651,7 +720,7 @@ export default function PricesPage() {
             </motion.div>
           </div>
 
-          {/* Oil & Energy Stocks */}
+          {/* Pakistani Oil & Energy Stocks */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -663,26 +732,130 @@ export default function PricesPage() {
                 "text-2xl font-bold flex items-center gap-3",
                 isDark ? "text-white" : "text-gray-900"
               )}>
-                <Building2 className={cn("w-6 h-6", isDark ? "text-samko-yellow" : "text-samko-dark-red")} />
-                Oil & Energy Stocks
+                <span className="text-2xl">🇵🇰</span>
+                Pakistani Oil & Energy Stocks (PSX)
               </h2>
-              <Link 
-                href="#"
-                className={cn(
-                  "flex items-center gap-1 text-sm font-medium transition-colors",
-                  isDark 
-                    ? "text-samko-yellow hover:text-samko-gold" 
-                    : "text-samko-dark-red hover:text-samko-red"
-                )}
-              >
-                View All
-                <ChevronRight className="w-4 h-4" />
-              </Link>
+              <span className={cn(
+                "px-3 py-1 rounded-full text-xs font-medium",
+                isDark ? "bg-green-500/20 text-green-400" : "bg-green-100 text-green-700"
+              )}>
+                Live
+              </span>
+            </div>
+            
+            {loadingStocks ? (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <div key={i} className={cn(
+                    "p-5 rounded-xl animate-pulse",
+                    isDark ? "bg-white/5" : "bg-gray-100"
+                  )}>
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className={cn("h-8 w-8 rounded-full", isDark ? "bg-white/10" : "bg-gray-200")} />
+                      <div>
+                        <div className={cn("h-4 w-20 rounded mb-1", isDark ? "bg-white/10" : "bg-gray-200")} />
+                        <div className={cn("h-3 w-12 rounded", isDark ? "bg-white/10" : "bg-gray-200")} />
+                      </div>
+                    </div>
+                    <div className={cn("h-6 w-16 rounded", isDark ? "bg-white/10" : "bg-gray-200")} />
+                  </div>
+                ))}
+              </div>
+            ) : errorStocks ? (
+              <div className={cn(
+                "p-6 rounded-2xl flex items-center gap-3",
+                isDark ? "bg-red-500/10 text-red-400" : "bg-red-50 text-red-600"
+              )}>
+                <AlertCircle className="w-5 h-5" />
+                {errorStocks}
+              </div>
+            ) : (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+              {pakistaniStocks.map((stock, index) => (
+                <motion.div
+                  key={stock.code}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.05 }}
+                  whileHover={{ y: -3 }}
+                  className={cn(
+                    "p-5 rounded-xl cursor-pointer transition-all",
+                    isDark 
+                      ? "bg-gradient-to-br from-green-900/20 to-green-800/10 border border-green-500/20 hover:border-green-400/40" 
+                      : "bg-gradient-to-br from-green-50 to-white border border-green-200/80 shadow-lg hover:shadow-xl hover:border-green-400"
+                  )}
+                >
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex items-center gap-3">
+                      <span className="text-xl">{stock.logo}</span>
+                      <div>
+                        <p className={cn(
+                          "font-semibold text-sm",
+                          isDark ? "text-white" : "text-gray-900"
+                        )}>
+                          {stock.name}
+                        </p>
+                        <p className={cn(
+                          "text-xs",
+                          isDark ? "text-gray-400" : "text-gray-500"
+                        )}>
+                          {stock.code} • {stock.exchange}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-end justify-between">
+                    <div>
+                      <p className={cn(
+                        "text-xl font-bold",
+                        isDark ? "text-white" : "text-gray-900"
+                      )}>
+                        ₨{stock.price.toLocaleString()}
+                      </p>
+                    </div>
+                    <div className={cn(
+                      "flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium",
+                      getTrendBg(stock.change),
+                      getTrendColor(stock.change)
+                    )}>
+                      {getTrendIcon(stock.change)}
+                      {stock.changePercent >= 0 ? "+" : ""}{stock.changePercent.toFixed(2)}%
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+            )}
+          </motion.div>
+
+          {/* International Oil & Energy Stocks */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-12"
+          >
+            <div className="flex items-center justify-between mb-6">
+              <h2 className={cn(
+                "text-2xl font-bold flex items-center gap-3",
+                isDark ? "text-white" : "text-gray-900"
+              )}>
+                <Globe className={cn("w-6 h-6", isDark ? "text-samko-yellow" : "text-samko-dark-red")} />
+                International Oil Giants
+              </h2>
+              <span className={cn(
+                "px-3 py-1 rounded-full text-xs font-medium",
+                isDark ? "bg-blue-500/20 text-blue-400" : "bg-blue-100 text-blue-700"
+              )}>
+                NYSE • Tadawul
+              </span>
             </div>
             
             {loadingStocks ? (
               <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+                {[1, 2, 3, 4].map((i) => (
                   <div key={i} className={cn(
                     "p-5 rounded-xl animate-pulse",
                     isDark ? "bg-white/5" : "bg-gray-100"
@@ -708,7 +881,7 @@ export default function PricesPage() {
               </div>
             ) : (
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {stockPrices.map((stock, index) => (
+              {internationalStocks.map((stock, index) => (
                 <motion.div
                   key={stock.code}
                   initial={{ opacity: 0, scale: 0.95 }}
@@ -719,8 +892,8 @@ export default function PricesPage() {
                   className={cn(
                     "p-5 rounded-xl cursor-pointer transition-all",
                     isDark 
-                      ? "bg-white/5 border border-white/10 hover:border-samko-yellow/30 hover:bg-white/10" 
-                      : "bg-white border border-gray-200 shadow-sm hover:shadow-md hover:border-samko-red/30"
+                      ? "bg-gradient-to-br from-blue-900/20 to-blue-800/10 border border-blue-500/20 hover:border-blue-400/40" 
+                      : "bg-gradient-to-br from-blue-50 to-white border border-blue-200/80 shadow-lg hover:shadow-xl hover:border-blue-400"
                   )}
                 >
                   <div className="flex items-start justify-between mb-3">
@@ -749,7 +922,7 @@ export default function PricesPage() {
                         "text-2xl font-bold",
                         isDark ? "text-white" : "text-gray-900"
                       )}>
-                        {stock.currency === "PKR" ? "₨" : stock.currency === "SAR" ? "﷼" : "$"}{stock.price.toFixed(2)}
+                        {stock.currency === "SAR" ? "﷼" : "$"}{stock.price.toFixed(2)}
                       </p>
                       <p className={cn(
                         "text-xs",

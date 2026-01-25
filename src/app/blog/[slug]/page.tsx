@@ -4,7 +4,7 @@ import { useState, useEffect, use } from "react";
 import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
 import Link from "next/link";
-import { ArrowLeft, Calendar, Clock, User, Tag, Share2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, Calendar, Clock, User, Tag, Share2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { type BlogPost } from "@/lib/blog";
 
@@ -240,7 +240,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
       </section>
 
       {/* Related Articles CTA */}
-      <section className={cn("py-16", isDark ? "bg-industrial-dark" : "bg-gray-50")}>
+      <section className={cn("py-16", isDark ? "bg-industrial-dark" : "bg-gradient-to-b from-gray-50/50 to-white")}>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className={cn(
             "font-heading text-2xl font-semibold mb-4",
@@ -253,9 +253,10 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
           </p>
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-samko-yellow text-industrial-dark font-semibold text-sm hover:bg-samko-gold transition-colors"
+            className="btn-primary"
           >
             View All Articles
+            <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </section>

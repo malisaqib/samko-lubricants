@@ -417,6 +417,100 @@
   color: #ffffff;
 }
 
+/* ===== Enhanced Light Mode Styles ===== */
+
+/* Light mode sections with more visual depth */
+.light section {
+  position: relative;
+}
+
+/* Light mode card enhancements */
+.light .card-enhanced {
+  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+  box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.08), 
+              0 1px 3px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.light .card-enhanced:hover {
+  box-shadow: 0 8px 30px -6px rgba(185, 28, 28, 0.15), 
+              0 4px 10px rgba(0, 0, 0, 0.08);
+  border-color: rgba(185, 28, 28, 0.2);
+}
+
+/* Subtle decorative patterns for light mode */
+.light-pattern {
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(185, 28, 28, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(245, 196, 0, 0.05) 0%, transparent 50%);
+}
+
+/* Light mode accent borders */
+.light .accent-border-left {
+  border-left: 3px solid #B91C1C;
+}
+
+.light .accent-border-top {
+  border-top: 3px solid #B91C1C;
+}
+
+/* Light mode highlighted sections */
+.light .section-highlight {
+  background: linear-gradient(180deg, #ffffff 0%, #fef2f2 50%, #ffffff 100%);
+}
+
+/* Light mode stat cards */
+.light .stat-card {
+  background: linear-gradient(145deg, #ffffff 0%, #fafafa 100%);
+  box-shadow: 0 2px 12px -2px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(185, 28, 28, 0.1);
+}
+
+.light .stat-card:hover {
+  box-shadow: 0 6px 24px -4px rgba(185, 28, 28, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Light mode icon containers */
+.light .icon-container {
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+  border: 1px solid rgba(185, 28, 28, 0.15);
+}
+
+/* Light mode testimonial cards */
+.light .testimonial-card {
+  background: #ffffff;
+  box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #B91C1C;
+}
+
+/* Light mode product cards */
+.light .product-card {
+  background: linear-gradient(145deg, #ffffff 0%, #fafafa 100%);
+  box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.light .product-card:hover {
+  box-shadow: 0 12px 32px -8px rgba(185, 28, 28, 0.2);
+  border-color: rgba(185, 28, 28, 0.3);
+}
+
+/* Light mode gradient overlays */
+.light .gradient-overlay-subtle {
+  background: linear-gradient(180deg, 
+    rgba(255, 255, 255, 0) 0%, 
+    rgba(254, 242, 242, 0.5) 50%, 
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+/* Light mode dividers with color */
+.light .divider-accent {
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #B91C1C, #F5C400, transparent);
+}
+
 /* Navbar link text shadow for visibility on hero backgrounds */
 nav a {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
@@ -438,6 +532,331 @@ nav button svg {
 ::selection {
   background-color: rgba(255, 215, 0, 0.3);
   color: inherit;
+}
+
+/* ===== Modern Animated Buttons - Premium Rounded Style ===== */
+
+/* Primary Button - Filled with shine effect */
+.btn-primary {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.875rem 2rem;
+  background: linear-gradient(135deg, #FFD700 0%, #F5C400 100%);
+  color: #0F172A;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  letter-spacing: 0.01em;
+  border-radius: 9999px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform: translateZ(0);
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  transition: left 0.6s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px -10px rgba(255, 215, 0, 0.5);
+}
+
+.btn-primary:hover::before {
+  left: 100%;
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 5px 15px -5px rgba(255, 215, 0, 0.4);
+}
+
+.btn-primary svg,
+.btn-primary .btn-icon {
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.btn-primary:hover svg,
+.btn-primary:hover .btn-icon {
+  transform: translateX(4px);
+}
+
+/* Secondary Button - Outline with fill effect */
+.btn-secondary {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.875rem 2rem;
+  background: transparent;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  letter-spacing: 0.01em;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border-radius: 9999px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform: translateZ(0);
+}
+
+.btn-secondary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  z-index: -1;
+}
+
+.btn-secondary:hover {
+  border-color: rgba(255, 255, 255, 0.8);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px -10px rgba(255, 255, 255, 0.2);
+}
+
+.btn-secondary:hover::before {
+  width: 100%;
+}
+
+.btn-secondary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary svg,
+.btn-secondary .btn-icon {
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.btn-secondary:hover svg,
+.btn-secondary:hover .btn-icon {
+  transform: translateX(4px);
+}
+
+/* Light mode secondary button */
+.light .btn-secondary-dark {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.light .btn-secondary-dark::before {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.light .btn-secondary-dark:hover {
+  border-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 10px 30px -10px rgba(255, 255, 255, 0.2);
+}
+
+/* Secondary button for light backgrounds */
+.btn-secondary-light {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.875rem 2rem;
+  background: transparent;
+  color: #0F172A;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  letter-spacing: 0.01em;
+  border: 1.5px solid rgba(15, 23, 42, 0.3);
+  border-radius: 9999px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform: translateZ(0);
+}
+
+.btn-secondary-light::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.05);
+  transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  z-index: -1;
+}
+
+.btn-secondary-light:hover {
+  border-color: rgba(15, 23, 42, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.15);
+}
+
+.btn-secondary-light:hover::before {
+  width: 100%;
+}
+
+.btn-secondary-light svg {
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.btn-secondary-light:hover svg {
+  transform: translateX(4px);
+}
+
+/* Submit/Action Button - With pulse animation */
+.btn-submit {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.875rem 2rem;
+  background: linear-gradient(135deg, #FFD700 0%, #F5C400 100%);
+  color: #0F172A;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  letter-spacing: 0.01em;
+  border-radius: 9999px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.btn-submit::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #F5C400 0%, #FFD700 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.btn-submit:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 15px 35px -10px rgba(255, 215, 0, 0.5);
+}
+
+.btn-submit:hover::after {
+  opacity: 1;
+}
+
+.btn-submit span,
+.btn-submit svg {
+  position: relative;
+  z-index: 1;
+}
+
+.btn-submit svg {
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.btn-submit:hover svg {
+  transform: translateX(4px);
+}
+
+/* Icon-only button with ripple effect */
+.btn-icon-only {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  color: #ffffff;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.btn-icon-only::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.btn-icon-only:hover {
+  background: rgba(255, 215, 0, 0.1);
+  border-color: rgba(255, 215, 0, 0.3);
+  transform: scale(1.05);
+}
+
+.btn-icon-only:hover::before {
+  opacity: 1;
+  transform: scale(1.5);
+}
+
+.btn-icon-only:active {
+  transform: scale(0.95);
+}
+
+/* Magnetic hover effect for all buttons */
+.btn-magnetic {
+  transition: transform 0.2s ease-out;
+}
+
+/* Underline animation for text links */
+.link-animated {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #FFD700;
+  transition: color 0.3s ease;
+}
+
+.link-animated:hover {
+  color: #F5C400;
+}
+
+.link-animated::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #FFD700, #F5C400);
+  transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.link-animated:hover::after {
+  width: 100%;
+}
+
+.link-animated svg {
+  transition: transform 0.3s ease;
+}
+
+.link-animated:hover svg {
+  transform: translateX(4px);
+}
+
+.light .link-animated {
+  color: #B91C1C;
+}
+
+.light .link-animated:hover {
+  color: #DC2626;
+}
+
+.light .link-animated::after {
+  background: linear-gradient(90deg, #B91C1C, #DC2626);
 }
 
 /* Reduced motion */

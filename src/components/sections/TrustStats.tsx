@@ -16,17 +16,17 @@ const stats = [
   },
   {
     icon: Globe,
-    value: 50,
+    value: 500,
     suffix: "+",
-    label: "Countries Served",
-    description: "Global reach with local expertise",
+    label: "Dealers Across Pakistan",
+    description: "From Karachi to Peshawar, we're everywhere",
   },
   {
     icon: Shield,
     value: 100,
     suffix: "%",
-    label: "Industrial Grade",
-    description: "Engineered for extreme conditions",
+    label: "Quality Guaranteed",
+    description: "Engineered for Pakistani conditions",
   },
 ];
 
@@ -79,7 +79,7 @@ export default function TrustStats() {
       "relative py-24 transition-colors duration-300",
       isDark 
         ? "bg-industrial-dark" 
-        : "bg-white"
+        : "bg-gradient-to-b from-white via-gray-50 to-white"
     )}>
       {/* Subtle accent line */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-samko-yellow/30 to-transparent" />
@@ -119,18 +119,18 @@ export default function TrustStats() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className={cn(
-                "relative p-8 rounded-sm text-center transition-all duration-300",
+                "relative p-8 rounded-2xl text-center transition-all duration-300",
                 isDark 
                   ? "bg-white/5 hover:bg-white/10 border border-white/5" 
-                  : "bg-gray-50 hover:bg-gray-100 border border-gray-100"
+                  : "bg-white hover:shadow-xl border border-gray-200 shadow-lg"
               )}
             >
               {/* Icon */}
               <div className={cn(
-                "inline-flex items-center justify-center w-14 h-14 rounded-sm mb-6",
+                "inline-flex items-center justify-center w-14 h-14 rounded-xl mb-6",
                 isDark 
                   ? "bg-samko-yellow/10" 
-                  : "bg-samko-red/5"
+                  : "bg-gradient-to-br from-red-50 to-red-100 border border-red-200"
               )}>
                 <stat.icon className={cn(
                   "w-6 h-6",

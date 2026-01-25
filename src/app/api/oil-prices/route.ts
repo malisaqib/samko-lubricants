@@ -6,44 +6,89 @@ let cachedPrices: OilPrice[] | null = null;
 let lastFetchTime: number = 0;
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
-async function fetchFromOilPriceAPI(): Promise<OilPrice[]> {
-  // Using a free API to get oil prices
-  // We'll use multiple sources for reliability
-  
+// Yahoo Finance commodity symbols
+const commoditySymbols = [
+  { symbol: "BZ=F", name: "Brent Crude Oil", code: "BRENT", unit: "barrel" },
+  { symbol: "CL=F", name: "WTI Crude Oil", code: "WTI", unit: "barrel" },
+  { symbol: "NG=F", name: "Natural Gas", code: "NG", unit: "MMBtu" },
+  { symbol: "HO=F", name: "Heating Oil", code: "HO", unit: "gallon" },
+  { symbol: "RB=F", name: "Gasoline RBOB", code: "RB", unit: "gallon" },
+];
+
+async function fetchYahooFinancePrice(symbol: string): Promise<{ price: number; change: number; changePercent: number } | null> {
   try {
-    // Try fetching from a free commodities API
-    // Note: In production, you would use a proper API key-based service
+    const response = await fetch(
+      `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?interval=1d&range=1d`,
+      {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+        },
+        cache: 'no-store',
+      }
+    );
+
+    if (!response.ok) return null;
+
+    const data = await response.json();
+    const result = data?.chart?.result?.[0];
+    if (!result) return null;
+
+    const meta = result.meta;
+    const currentPrice = meta.regularMarketPrice;
+    const previousClose = meta.previousClose || meta.chartPreviousClose;
     
-    // Simulating realistic price fluctuations based on fallback data
-    // This provides dynamic pricing that changes throughout the day
-    const now = new Date();
-    const hour = now.getHours();
-    const minute = now.getMinutes();
+    if (!currentPrice || !previousClose) return null;
+
+    const change = currentPrice - previousClose;
+    const changePercent = (change / previousClose) * 100;
+
+    return {
+      price: Number(currentPrice.toFixed(2)),
+      change: Number(change.toFixed(2)),
+      changePercent: Number(changePercent.toFixed(2)),
+    };
+  } catch (error) {
+    console.error(`Error fetching ${symbol}:`, error);
+    return null;
+  }
+}
+
+async function fetchFromOilPriceAPI(): Promise<OilPrice[]> {
+  const now = new Date();
+  const results: OilPrice[] = [];
+
+  // Fetch all commodities in parallel
+  const fetchPromises = commoditySymbols.map(async (commodity) => {
+    const data = await fetchYahooFinancePrice(commodity.symbol);
     
-    // Create realistic price variations
-    const priceVariation = (Math.sin((hour * 60 + minute) / 100) * 0.5) + 
-                          (Math.random() * 0.3 - 0.15);
-    
-    const updatedPrices: OilPrice[] = fallbackOilPrices.map(price => {
-      const variation = priceVariation * (price.price * 0.02); // 2% max variation
-      const newPrice = Number((price.price + variation).toFixed(2));
-      const newChange = Number((variation).toFixed(2));
-      const newChangePercent = Number(((newChange / price.price) * 100).toFixed(2));
-      
+    if (data) {
       return {
-        ...price,
-        price: newPrice,
-        change: newChange,
-        changePercent: newChangePercent,
+        name: commodity.name,
+        code: commodity.code,
+        price: data.price,
+        change: data.change,
+        changePercent: data.changePercent,
+        currency: "USD",
+        unit: commodity.unit,
         lastUpdated: now.toISOString(),
       };
-    });
+    }
     
-    return updatedPrices;
-  } catch (error) {
-    console.error("Error fetching oil prices:", error);
-    throw error;
+    // Fallback for this specific commodity
+    const fallback = fallbackOilPrices.find(p => p.code === commodity.code);
+    if (fallback) {
+      return { ...fallback, lastUpdated: now.toISOString() };
+    }
+    return null;
+  });
+
+  const fetchedPrices = await Promise.all(fetchPromises);
+  
+  for (const price of fetchedPrices) {
+    if (price) results.push(price);
   }
+
+  return results.length > 0 ? results : fallbackOilPrices;
 }
 
 export async function GET() {

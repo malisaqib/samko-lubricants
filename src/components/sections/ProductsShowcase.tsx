@@ -93,7 +93,7 @@ export default function ProductsShowcase() {
       "relative py-24 transition-colors duration-300",
       isDark 
         ? "bg-industrial-darker" 
-        : "bg-gray-50"
+        : "bg-gradient-to-b from-gray-50 via-white to-gray-50"
     )}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
@@ -122,15 +122,10 @@ export default function ProductsShowcase() {
           </div>
           <Link
             href="/products"
-            className={cn(
-              "group inline-flex items-center gap-2 text-sm font-semibold transition-colors",
-              isDark 
-                ? "text-samko-yellow hover:text-samko-gold" 
-                : "text-samko-dark-red hover:text-samko-red"
-            )}
+            className="link-animated"
           >
             View All Products
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-4 h-4" />
           </Link>
         </motion.div>
 
@@ -147,20 +142,20 @@ export default function ProductsShowcase() {
               >
               <div
                 className={cn(
-                  "group block relative overflow-hidden rounded-sm transition-all duration-300 h-full",
+                  "group block relative overflow-hidden rounded-2xl transition-all duration-300 h-full",
                   isDark 
                     ? "bg-white/5 hover:bg-white/10 border border-white/10 hover:border-samko-yellow/30" 
-                    : "bg-white hover:shadow-xl border border-gray-200 hover:border-samko-yellow"
+                    : "bg-white hover:shadow-2xl border border-gray-200 hover:border-samko-dark-red/40 shadow-lg"
                 )}
               >
                 {/* Content */}
                 <div className="p-6 flex flex-col h-full">
                   {/* Icon */}
                   <div className={cn(
-                    "inline-flex items-center justify-center w-14 h-14 rounded-sm mb-5",
+                    "inline-flex items-center justify-center w-14 h-14 rounded-xl mb-5",
                     isDark 
                       ? "bg-samko-yellow text-industrial-dark" 
-                      : "bg-samko-yellow text-industrial-dark"
+                      : "bg-gradient-to-br from-samko-yellow to-samko-gold text-industrial-dark shadow-md"
                   )}>
                     <product.icon className="w-6 h-6" />
                   </div>
@@ -183,10 +178,10 @@ export default function ProductsShowcase() {
                   
                   {/* Use Case Badge */}
                   <div className={cn(
-                    "px-3 py-2 rounded-sm text-xs font-medium",
+                    "px-3 py-2 rounded-lg text-xs font-medium",
                     isDark 
                       ? "bg-industrial-dark/50 text-samko-yellow border border-samko-yellow/20" 
-                      : "bg-gray-100 text-gray-700 border border-gray-200"
+                      : "bg-gradient-to-r from-red-50 to-orange-50 text-samko-dark-red border border-red-200"
                   )}>
                     <span className={cn(
                       "font-semibold",

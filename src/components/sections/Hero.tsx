@@ -13,7 +13,7 @@ const slides = [
     title: "Powering Pakistan's",
     titleHighlight: "Workhorses",
     subtitle: "Premium lubricants trusted by truck drivers and transporters across Pakistan's highways.",
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=2070",
+    image: "/slide1_f.png",
   },
   {
     id: 2,
@@ -29,7 +29,7 @@ const slides = [
     title: "Fueling Pakistan's",
     titleHighlight: "Streets",
     subtitle: "From loader rickshaws to motorcycles, keeping everyday transport running smoothly.",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Qingqi_in_Karachi.jpg/1280px-Qingqi_in_Karachi.jpg",
+    image: "/slide_3_f.png",
   },
   {
     id: 4,
@@ -43,37 +43,40 @@ const slides = [
 
 export default function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [progressKey, setProgressKey] = useState(0);
   const slideDuration = 3500; // 3.5 seconds - single source of truth
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
+    setProgressKey((prev) => prev + 1);
   }, []);
 
   const prevSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+    setProgressKey((prev) => prev + 1);
   }, []);
 
+  const goToSlide = useCallback((index: number) => {
+    setCurrentSlide(index);
+    setProgressKey((prev) => prev + 1);
+  }, []);
+
+  // Auto-advance slides - always runs
   useEffect(() => {
-    if (!isAutoPlaying) return;
     const interval = setInterval(nextSlide, slideDuration);
     return () => clearInterval(interval);
-  }, [isAutoPlaying, nextSlide]);
+  }, [nextSlide, slideDuration]);
 
   return (
-    <section 
-      className="relative h-screen w-full overflow-hidden"
-      onMouseEnter={() => setIsAutoPlaying(false)}
-      onMouseLeave={() => setIsAutoPlaying(true)}
-    >
+    <section className="relative h-screen w-full overflow-hidden">
       {/* Background Slides */}
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="popLayout">
         <motion.div
           key={currentSlide}
-          initial={{ opacity: 0, scale: 1.1 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.8, ease: "easeInOut" }}
+          transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
           className="absolute inset-0"
         >
           {/* Background Image */}
@@ -93,20 +96,20 @@ export default function Hero() {
       <div className="relative z-10 h-full flex items-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="max-w-2xl">
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="popLayout">
               <motion.div
                 key={currentSlide}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
                 className="space-y-8"
               >
                 {/* Label */}
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2, duration: 0.5 }}
+                  transition={{ delay: 0.2, duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
                 >
                   <span className="inline-block px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-samko-yellow border-l-2 border-samko-yellow bg-samko-yellow/10">
                     {slides[currentSlide].label}
@@ -115,9 +118,9 @@ export default function Hero() {
 
                 {/* Title */}
                 <motion.h1
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3, duration: 0.6 }}
+                  transition={{ delay: 0.3, duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
                   className="font-heading text-5xl md:text-6xl lg:text-7xl font-semibold text-white leading-[1.1] tracking-tight"
                 >
                   {slides[currentSlide].title}
@@ -127,9 +130,9 @@ export default function Hero() {
 
                 {/* Subtitle */}
                 <motion.p
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.6 }}
+                  transition={{ delay: 0.4, duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
                   className="text-lg md:text-xl text-white/80 max-w-lg leading-relaxed font-light"
                 >
                   {slides[currentSlide].subtitle}
@@ -137,24 +140,24 @@ export default function Hero() {
 
                 {/* CTA Buttons */}
                 <motion.div
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5, duration: 0.6 }}
+                  transition={{ delay: 0.5, duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
                   className="flex flex-wrap gap-4 pt-4"
                 >
                   <Link
                     href="/products"
-                    className="group inline-flex items-center gap-2 px-6 py-3.5 bg-samko-yellow text-industrial-dark font-semibold text-sm tracking-wide hover:bg-samko-gold transition-colors duration-200"
+                    className="btn-primary"
                   >
                     Explore Products
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-4 h-4" />
                   </Link>
                   <Link
                     href="/about"
-                    className="group inline-flex items-center gap-2 px-6 py-3.5 bg-transparent border border-white/40 text-white font-semibold text-sm tracking-wide hover:bg-white/10 hover:border-white/60 transition-all duration-200"
+                    className="btn-secondary btn-secondary-dark"
                   >
                     Learn More
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-4 h-4" />
                   </Link>
                 </motion.div>
               </motion.div>
@@ -193,7 +196,7 @@ export default function Hero() {
                   initial={{ width: "0%" }}
                   animate={{ width: "100%" }}
                   transition={{ duration: slideDuration / 1000, ease: "linear" }}
-                  key={currentSlide}
+                  key={progressKey}
                 />
               </div>
             </div>
@@ -206,7 +209,7 @@ export default function Hero() {
         {slides.map((_, index) => (
           <button
             key={index}
-            onClick={() => setCurrentSlide(index)}
+            onClick={() => goToSlide(index)}
             className={cn(
               "h-2 rounded-full transition-all duration-300",
               index === currentSlide

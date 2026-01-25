@@ -39,10 +39,10 @@ export default function DealerPage() {
   };
 
   return (
-    <div className={cn("min-h-screen transition-colors", isDark ? "bg-industrial-darker" : "bg-white")}>
+    <div className={cn("min-h-screen transition-colors", isDark ? "bg-industrial-darker" : "bg-gradient-to-b from-white via-gray-50 to-white")}>
       {/* Hero */}
       <section className="relative pt-32 pb-20">
-        <div className={cn("absolute inset-0", isDark ? "bg-gradient-to-b from-industrial-dark to-industrial-darker" : "bg-gradient-to-b from-gray-100 to-white")} />
+        <div className={cn("absolute inset-0", isDark ? "bg-gradient-to-b from-industrial-dark to-industrial-darker" : "bg-gradient-to-b from-red-50/50 to-white")} />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
             <span className={cn("inline-block px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] mb-6",
@@ -70,8 +70,8 @@ export default function DealerPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {benefits.map((benefit, index) => (
               <motion.div key={benefit.title} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }}
-                className={cn("rounded-sm p-6 text-center", isDark ? "bg-white/5 border border-white/5" : "bg-white border border-gray-100")}>
-                <div className={cn("w-12 h-12 rounded-sm mx-auto flex items-center justify-center mb-4", isDark ? "bg-samko-yellow/10" : "bg-samko-red/5")}>
+                className={cn("rounded-2xl p-6 text-center transition-all duration-300", isDark ? "bg-white/5 border border-white/5" : "bg-white border border-gray-200 shadow-lg hover:shadow-xl")}>
+                <div className={cn("w-12 h-12 rounded-xl mx-auto flex items-center justify-center mb-4", isDark ? "bg-samko-yellow/10" : "bg-gradient-to-br from-red-100 to-red-50 border border-red-200")}>
                   <benefit.icon className={cn("w-6 h-6", isDark ? "text-samko-yellow" : "text-samko-dark-red")} />
                 </div>
                 <h3 className={cn("text-lg font-semibold mb-2", isDark ? "text-white" : "text-gray-900")}>{benefit.title}</h3>
@@ -89,7 +89,7 @@ export default function DealerPage() {
             {/* Requirements */}
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
               <h2 className={cn("font-heading text-3xl font-semibold mb-6", isDark ? "text-white" : "text-gray-900")}>Requirements</h2>
-              <div className={cn("rounded-sm p-8", isDark ? "bg-white/5 border border-white/5" : "bg-gray-50 border border-gray-100")}>
+              <div className={cn("rounded-2xl p-8", isDark ? "bg-white/5 border border-white/5" : "bg-white border border-gray-200 shadow-lg")}>
                 <ul className="space-y-4">
                   {requirements.map((req, index) => (
                     <li key={index} className="flex items-start gap-3">
@@ -104,7 +104,7 @@ export default function DealerPage() {
             {/* Application Form */}
             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
               <h2 className={cn("font-heading text-3xl font-semibold mb-6", isDark ? "text-white" : "text-gray-900")}>Apply Now</h2>
-              <div className={cn("rounded-sm p-8", isDark ? "bg-white/5 border border-white/5" : "bg-gray-50 border border-gray-100")}>
+              <div className={cn("rounded-2xl p-8", isDark ? "bg-white/5 border border-white/5" : "bg-white border border-gray-200 shadow-lg")}>
                 <form onSubmit={handleSubmit} className="space-y-6">
                   {[
                     { name: "name", label: "Full Name", type: "text" },
@@ -117,19 +117,19 @@ export default function DealerPage() {
                       <label className={cn("block text-sm font-medium mb-2", isDark ? "text-gray-300" : "text-gray-700")}>{field.label}</label>
                       <input type={field.type} value={formData[field.name as keyof typeof formData]}
                         onChange={(e) => setFormData({ ...formData, [field.name]: e.target.value })}
-                        className={cn("w-full px-4 py-3 rounded-sm text-sm focus:outline-none focus:ring-2",
-                          isDark ? "bg-white/5 border border-white/10 text-white focus:ring-samko-yellow/50" : "bg-white border border-gray-200 text-gray-900 focus:ring-samko-dark-red/50")} />
+                        className={cn("w-full px-5 py-3.5 rounded-xl text-sm focus:outline-none focus:ring-2 transition-all duration-200",
+                          isDark ? "bg-white/5 border border-white/10 text-white focus:ring-samko-yellow/50 focus:border-samko-yellow/30" : "bg-white border border-gray-200 text-gray-900 focus:ring-samko-dark-red/50 focus:border-samko-dark-red/30")} />
                     </div>
                   ))}
                   <div>
                     <label className={cn("block text-sm font-medium mb-2", isDark ? "text-gray-300" : "text-gray-700")}>Additional Information</label>
                     <textarea rows={4} value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      className={cn("w-full px-4 py-3 rounded-sm text-sm focus:outline-none focus:ring-2 resize-none",
-                        isDark ? "bg-white/5 border border-white/10 text-white focus:ring-samko-yellow/50" : "bg-white border border-gray-200 text-gray-900 focus:ring-samko-dark-red/50")} />
+                      className={cn("w-full px-5 py-3.5 rounded-xl text-sm focus:outline-none focus:ring-2 resize-none transition-all duration-200",
+                        isDark ? "bg-white/5 border border-white/10 text-white focus:ring-samko-yellow/50 focus:border-samko-yellow/30" : "bg-white border border-gray-200 text-gray-900 focus:ring-samko-dark-red/50 focus:border-samko-dark-red/30")} />
                   </div>
                   <button type="submit"
-                    className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-samko-yellow text-industrial-dark font-semibold text-sm hover:bg-samko-gold transition-colors">
-                    Submit Application <ArrowRight className="w-4 h-4" />
+                    className="btn-submit w-full justify-center">
+                    <span>Submit Application</span> <ArrowRight className="w-4 h-4" />
                   </button>
                 </form>
               </div>

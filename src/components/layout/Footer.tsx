@@ -8,7 +8,6 @@ import {
   Phone, 
   Mail, 
   Facebook, 
-  Twitter, 
   Linkedin, 
   Instagram,
   ArrowUpRight
@@ -27,24 +26,19 @@ const footerLinks = {
   company: [
     { name: "About Us", href: "/about" },
     { name: "Our History", href: "/about#history" },
-    { name: "Certifications", href: "/about#certifications" },
-    { name: "Careers", href: "/careers" },
     { name: "News & Updates", href: "/blog" },
   ],
   support: [
     { name: "Contact Us", href: "/contact" },
     { name: "Become a Dealer", href: "/dealer" },
     { name: "Technical Support", href: "/contact" },
-    { name: "FAQs", href: "/prices#faq" },
-    { name: "Downloads", href: "/downloads" },
   ],
 };
 
 const socialLinks = [
-  { name: "Facebook", icon: Facebook, href: "#" },
-  { name: "Twitter", icon: Twitter, href: "#" },
-  { name: "LinkedIn", icon: Linkedin, href: "#" },
-  { name: "Instagram", icon: Instagram, href: "#" },
+  { name: "Facebook", icon: Facebook, href: "https://www.facebook.com/profile.php?id=100094002336180" },
+  { name: "LinkedIn", icon: Linkedin, href: "https://www.linkedin.com/in/talhatouseef/" },
+  { name: "Instagram", icon: Instagram, href: "https://www.instagram.com/samkolubricants" },
 ];
 
 export default function Footer() {
@@ -62,7 +56,7 @@ export default function Footer() {
       "relative pt-20 pb-8 transition-colors duration-300",
       isDark 
         ? "bg-industrial-darker" 
-        : "bg-gray-50 border-t border-gray-200"
+        : "bg-gradient-to-b from-gray-100 to-gray-50 border-t border-gray-200"
     )}>
       {/* Subtle top border accent */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-samko-yellow via-samko-gold to-samko-red" />
@@ -100,7 +94,7 @@ export default function Footer() {
               "text-base leading-relaxed mb-8 max-w-md",
               isDark ? "text-gray-400" : "text-gray-600"
             )}>
-              For over 40 years, SAMKO Lubricants has been delivering premium 
+              For over 20 years, SAMKO Lubricants has been delivering premium 
               industrial lubrication solutions to manufacturers worldwide, 
               ensuring optimal performance and reliability.
             </p>
@@ -121,7 +115,7 @@ export default function Footer() {
                   "text-sm",
                   isDark ? "text-gray-400" : "text-gray-600"
                 )}>
-                  Industrial Zone, Block 7, Dubai, UAE
+                  New Satellite Town, Sargodha, Pakistan
                 </span>
               </div>
               <div className="flex items-center space-x-3">
@@ -138,7 +132,7 @@ export default function Footer() {
                   "text-sm",
                   isDark ? "text-gray-400" : "text-gray-600"
                 )}>
-                  +971 4 123 4567
+                  +92 315 3210929
                 </span>
               </div>
               <div className="flex items-center space-x-3">
@@ -155,7 +149,7 @@ export default function Footer() {
                   "text-sm",
                   isDark ? "text-gray-400" : "text-gray-600"
                 )}>
-                  info@samkolubricants.com
+                  samkolubricants@gmail.com
                 </span>
               </div>
             </div>
@@ -266,6 +260,8 @@ export default function Footer() {
                 <motion.a
                   key={social.name}
                   href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className={cn(
