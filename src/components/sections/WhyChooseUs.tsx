@@ -200,7 +200,7 @@ export default function WhyChooseUs() {
               <div
                 className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
                 style={{ 
-                  backgroundImage: `url(https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?q=80&w=2070)` 
+                  backgroundImage: `url(whyus3.png)` 
                 }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
@@ -225,7 +225,7 @@ export default function WhyChooseUs() {
               <div
                 className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
                 style={{ 
-                  backgroundImage: `url(https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=2032)` 
+                  backgroundImage: `url(whyus4.png)` 
                 }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />

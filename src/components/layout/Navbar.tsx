@@ -134,11 +134,13 @@ export default function Navbar() {
                   <span
                     className={cn(
                       "absolute bottom-0 left-0 h-0.5 transition-all duration-300 ease-out origin-left",
-                      (isScrolled || !isHomePage) && !isDark ? "bg-samko-dark-red" : "bg-samko-yellow",
                       pathname === link.href
                         ? "w-full"
                         : "w-0 group-hover:w-full"
                     )}
+                    style={{
+                      background: "linear-gradient(to right, #FFD600, #FF9800, #F44336)",
+                    }}
                   />
                 </Link>
               ))}
