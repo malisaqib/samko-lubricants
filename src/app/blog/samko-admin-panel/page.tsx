@@ -427,9 +427,9 @@ export default function SecretAdminBlogPage() {
                     onChange={(e) => setFilterCategory(e.target.value)}
                     className={cn(inputClassName, "pl-11 pr-8 min-w-[200px]")}
                   >
-                    <option value="">All Categories</option>
+                    <option value="" className={isDark ? "bg-gray-900 text-white" : ""}>All Categories</option>
                     {categories.map(cat => (
-                      <option key={cat.id} value={cat.name}>{cat.name}</option>
+                      <option key={cat.id} value={cat.name} className={isDark ? "bg-gray-900 text-white" : ""}>{cat.name}</option>
                     ))}
                   </select>
                 </div>
@@ -676,7 +676,7 @@ export default function SecretAdminBlogPage() {
                         className={inputClassName}
                       >
                         {categories.map(cat => (
-                          <option key={cat.id} value={cat.name}>{cat.name}</option>
+                          <option key={cat.id} value={cat.name} className={isDark ? "bg-gray-900 text-white" : ""}>{cat.name}</option>
                         ))}
                       </select>
                     </div>

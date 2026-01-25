@@ -94,8 +94,8 @@ export default function Footer() {
               "text-base leading-relaxed mb-8 max-w-md",
               isDark ? "text-gray-400" : "text-gray-600"
             )}>
-              For over 20 years, SAMKO Lubricants has been delivering premium 
-              industrial lubrication solutions to manufacturers worldwide, 
+              For over 25 years, SAMKO Lubricants has been delivering premium 
+              industrial lubrication solutions across Pakistan, 
               ensuring optimal performance and reliability.
             </p>
 

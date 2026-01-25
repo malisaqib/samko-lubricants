@@ -124,10 +124,10 @@ export default function BlogPage() {
 
       {/* Category Filter */}
       <section className={cn(
-        "sticky top-20 z-30 py-4 backdrop-blur-xl border-b",
+        "py-4 border-b",
         isDark 
-          ? "bg-industrial-darker/90 border-white/10" 
-          : "bg-white/90 border-gray-200"
+          ? "bg-industrial-darker border-white/10" 
+          : "bg-white border-gray-200"
       )}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide">
