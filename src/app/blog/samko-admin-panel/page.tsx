@@ -23,7 +23,7 @@ import {
   Shield
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { type BlogPost, type BlogCategory, defaultCategories } from "@/lib/blog";
+import { type BlogPost, type BlogCategory } from "@/lib/blog";
 
 type ViewMode = "list" | "create" | "edit";
 
@@ -32,7 +32,7 @@ export default function SecretAdminBlogPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [checkingAuth, setCheckingAuth] = useState(true);
   const [posts, setPosts] = useState<BlogPost[]>([]);
-  const [categories] = useState<BlogCategory[]>(defaultCategories);
+  const [categories, setCategories] = useState<BlogCategory[]>([]);
   const [loading, setLoading] = useState(true);
   const [viewMode, setViewMode] = useState<ViewMode>("list");
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
@@ -109,11 +109,14 @@ export default function SecretAdminBlogPage() {
   const fetchPosts = async () => {
     try {
       setLoading(true);
-      const response = await fetch("/api/blog/posts?published=all");
-      const data = await response.json();
-      if (data.success) {
-        setPosts(data.data);
-      }
+      const [postsRes, catsRes] = await Promise.all([
+        fetch("/api/blog/posts?published=all"),
+        fetch("/api/blog/categories"),
+      ]);
+      const postsData = await postsRes.json();
+      const catsData = await catsRes.json();
+      if (postsData.success) setPosts(postsData.data);
+      if (catsData.success) setCategories(catsData.data);
     } catch (error) {
       console.error("Failed to fetch posts:", error);
       showNotification("error", "Failed to fetch posts");
