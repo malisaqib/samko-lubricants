@@ -36,11 +36,12 @@ export async function GET(request: NextRequest) {
       query = query.eq("featured", true);
     }
 
-    if (published !== null) {
+    if (published === "true" || published === "false") {
       query = query.eq("published", published === "true");
-    } else {
+    } else if (published === null) {
       query = query.eq("published", true);
     }
+    // published=all → no filter, return every post
 
     query = query.order("published_at", { ascending: false });
 
